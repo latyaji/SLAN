@@ -45,7 +45,7 @@ function StackNavigation() {
   };
   useEffect(() => {
     tokenStore();
-    console.log('calleeddd', isLoggedin);
+   // console.log('calleeddd', isLoggedin);
   },[]);
 
   
