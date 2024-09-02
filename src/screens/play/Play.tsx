@@ -86,15 +86,12 @@ const Play = () => {
         </View>
 
         <FlatList
-          // data={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]}
           data={tournamnet}
           //keyExtractor={item => item.id}
           horizontal={true}
           showsHorizontalScrollIndicator={false} // Optional, hides the scrollbar
           contentContainerStyle={styles.listContainer}
-          renderItem={({item}) => (
-            // console.log("i----->>>>>>",item.Tournament_Name)
-            
+          renderItem={({item}) => (            
             <View
               style={{
                 height: vh(200),
