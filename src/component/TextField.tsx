@@ -6,24 +6,24 @@ import {
   View,
   Text
 } from 'react-native';
-import {
-  heightPercentageToDP as hp,
-  widthPercentageToDP as wp,
-} from 'react-native-responsive-screen';
 import { Colors } from '../utils/Colors';
 import { globalStyles } from '../utils/GlobalCss';
-import { s } from 'react-native-size-matters';
+import {
+  scale as s,
+  verticalScale as vh,
+  moderateScale as ms,
+} from 'react-native-size-matters';
 import { Config } from '../utils/Config';
 
 interface TextFieldProps  {
   placeholder: string;
-  source: any;
+  source?: any;
   keyboardType?: string;
-  value: string; 
-  onChangeTxt: (text: string) => void;
+  value?: string; 
+  onChangeTxt?: (text: string) => void;
   secureTextEntry?: boolean;
-  maxLength:number;
-  mobilno:string
+  maxLength?:number;
+  mobilno?:string
 }
 
 const TextField = ({ placeholder, source, keyboardType, value, onChangeTxt,secureTextEntry,maxLength,mobilno }:TextFieldProps) => {
@@ -56,13 +56,13 @@ const styles = StyleSheet.create({
     borderColor: Colors.lightgrey,
     flexDirection: 'row',
     alignItems: 'center',
-    width: hp(90),
-    height:wp(17)
+    width: '100%',
+    height:vh(57)
   },
   textIcon: {
-    marginRight: 12,
-    width: hp(4),
-    height: wp(5),
+    marginRight: s(12),
+    width: s(22),
+    height: vh(16),
     resizeMode: 'contain',
   },
 });

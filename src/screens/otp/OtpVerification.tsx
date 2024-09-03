@@ -6,8 +6,13 @@ import {globalStyles} from '../../utils/GlobalCss';
 import OTPTextInput from 'react-native-otp-textinput';
 import Button from '../../component/Button';
 import {Colors} from '../../utils/Colors';
-import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import {useNavigation} from '@react-navigation/native';
+import {
+  scale as s,
+  verticalScale as vh,
+  moderateScale as ms,
+} from 'react-native-size-matters';
+
 
 const OtpVerification = () => {
   const [otp, setOtp] = useState('');
@@ -54,7 +59,7 @@ const OtpVerification = () => {
         <Text
           style={[
             globalStyles.regulareTxt,
-            {color: Colors.blue, alignSelf: 'center', marginTop: wp(3)},
+            {color: Colors.blue, alignSelf: 'center', marginTop: vh(3)},
           ]}>
           {Config.resendOtp}
         </Text>

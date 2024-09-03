@@ -1,12 +1,13 @@
 import React from 'react';
 import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
-import {
-  heightPercentageToDP as hp,
-  widthPercentageToDP as wp,
-} from 'react-native-responsive-screen';
 import { goback, smalllogo } from '../utils/assets';
 import { Colors } from '../utils/Colors';
 import { Config } from '../utils/Config';
+import {
+  scale as s,
+  verticalScale as vh,
+  moderateScale as ms,
+} from 'react-native-size-matters';
 
 interface HeaderProps {
   showImage?: boolean; 
@@ -41,31 +42,32 @@ const Header = ({ showImage = true,tittle,onPress,backImage = true}:HeaderProps)
 
 export default Header;
 
+
+
+
 const styles = StyleSheet.create({
   container: {
     backgroundColor: Colors.Orange,
-    height: hp(14),
+    height: vh(94),
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'row'
   },
   headerImg: {
     resizeMode: 'cover',
-    marginHorizontal: wp(3),
-    // height:wp(7),
-    // width:hp(16),
-    marginTop:wp(10)
+    marginHorizontal: vh(2),
+    marginTop:vh(50)
   },
   backImg:{
     resizeMode: 'cover',
-    marginHorizontal: wp(4),
-    marginTop:wp(10),
+    marginHorizontal: vh(10),
+    marginTop:vh(50),
     
   },
   headerTxt:{
     fontFamily: Config.bold, 
     color: Colors.White, 
-    fontSize: 18,
-    marginTop:wp(10)
+    fontSize: s(15),
+    marginTop:vh(50)
   }
 });

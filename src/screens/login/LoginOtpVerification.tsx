@@ -6,13 +6,17 @@ import {globalStyles} from '../../utils/GlobalCss';
 import OTPTextInput from 'react-native-otp-textinput';
 import Button from '../../component/Button';
 import {Colors} from '../../utils/Colors';
-import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import {useNavigation} from '@react-navigation/native';
 import TextField from '../../component/TextField';
 import { phoneIcon } from '../../utils/assets';
 import { setLoginPhone } from '../../store/Slice/LoginSlice';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppDispatch, RootState} from '../../store/Store';
+import {
+  scale as s,
+  verticalScale as vh,
+  moderateScale as ms,
+} from 'react-native-size-matters';
 
 
 const LoginOtpVerification = () => {
@@ -69,7 +73,7 @@ const LoginOtpVerification = () => {
         <Text
           style={[
             globalStyles.regulareTxt,
-            {color: Colors.blue, alignSelf: 'center', marginTop: wp(3)},
+            {color: Colors.blue, alignSelf: 'center', marginTop: vh(3)},
           ]}>
           {Config.resendOtp}
         </Text>
@@ -77,7 +81,7 @@ const LoginOtpVerification = () => {
           <Text
             style={[
               globalStyles.regulareTxt,
-              {alignSelf: 'center', color: Colors.success, marginTop: wp(3)},
+              {alignSelf: 'center', color: Colors.success, marginTop: vh(3)},
             ]}>
             {Config.otpVerifiedSuccess}
           </Text>

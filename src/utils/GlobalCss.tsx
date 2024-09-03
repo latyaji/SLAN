@@ -1,53 +1,50 @@
 import {StyleSheet} from 'react-native';
 import {Config} from './Config';
-import {
-  heightPercentageToDP as hp,
-  widthPercentageToDP as wp,
-} from 'react-native-responsive-screen';
+
 import {Colors} from './Colors';
 import {
   scale as s,
-  verticalScale as vs,
+  verticalScale as vh,
   moderateScale as ms,
 } from 'react-native-size-matters';
 
 export const globalStyles = StyleSheet.create({
   largeTxt: {
     fontFamily: Config.medium,
-    fontSize: hp(3.2),
+    fontSize: s(22),
     color: 'black',
   },
   regulareTxt: {
     fontFamily: Config.regular,
-    fontSize: hp(2.2),
+    fontSize: s(16),
     color: '#000',
   },
   smallTxt: {
     fontFamily: Config.regular,
-    fontSize: hp(1.6),
+    fontSize: s(12),
     color: '##595959',
-    marginTop: wp(5),
+    marginTop: vh(5),
   },
   screenSpacing: {
     margin: s(12),
   },
   textIcon: {
-    marginRight: 12,
-    width: hp(4),
-    height: wp(5),
+    marginRight: s(12),
+    width: s(17),
+    height: vh(17),
     resizeMode: 'contain',
   },
   boldblueTxt: {
-    fontFamily: Config.bold,
-    fontSize: hp(2.2),
-    color: '#1019F0',
+    fontFamily: Config.medium,
+    fontSize: s(14),
+    color: Colors.blue,
   },
   centerTxt: {
     alignItems: 'center',
   },
   errormsg: {
     fontFamily: Config.regular,
-    fontSize: hp(1.8),
+    fontSize: s(1.8),
     alignSelf: 'flex-end',
     color: Colors.red,
     
@@ -65,10 +62,10 @@ export const globalStyles = StyleSheet.create({
     color: Colors.black,
   },
   cardContainer: {
-    height: vs(200),
+    height: vh(200),
     width: s(200),
     borderWidth: 1,
-    marginTop: vs(12),
+    marginTop: vh(12),
     borderRadius: s(12),
     borderColor: Colors.grey,
     shadowColor: Colors.grey,
@@ -78,9 +75,9 @@ export const globalStyles = StyleSheet.create({
     marginRight: s(10),
   },
   imgCard: {
-    height: vs(100),
+    height: vh(100),
     width: s(160),
-    marginTop: vs(12),
+    marginTop: vh(12),
     borderRadius: s(12),
     shadowColor: '#000',
     shadowOpacity: 0.2,
@@ -97,47 +94,47 @@ export const globalStyles = StyleSheet.create({
     fontFamily: Config.medium,
   },
   cardImg: {
-    height: vs(90),
+    height: vh(90),
     width: s(160),
     borderRadius: 12,
   },
   cardTittleConatiner: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: vs(14),
+    marginTop: vh(14),
   },
   whiteTxt: {
     color: Colors.White,
     fontSize: 18,
     textAlign: 'center',
-    marginLeft: hp(0.5),
+    marginLeft: s(0.5),
     fontFamily: Config.bold,
   },
   smallButton: {
     backgroundColor: Colors.lightOrange,
-    paddingHorizontal: vs(60),
-    paddingVertical: vs(9),
+    paddingHorizontal: vh(60),
+    paddingVertical: vh(9),
     borderRadius: s(25),
-    marginTop: vs(12),
+    marginTop: vh(12),
   },
   noConectiontxt: {
     fontFamily: Config.bold,
     fontSize: s(18),
     color: Colors.black,
-    lineHeight: vs(30),
+    lineHeight: vh(30),
   },
   loginSuccessMsg: {
     fontFamily: Config.medium,
-    fontSize: hp(2.2),
+    fontSize: s(2.2),
     alignSelf: 'center',
     color: Colors.success,
-    marginTop: wp(3),
+    marginTop: vh(3),
   },
   loginFailedMsg: {
     fontFamily: Config.medium,
-    fontSize: hp(2.2),
+    fontSize: s(2.2),
     alignSelf: 'center',
     color: Colors.red,
-    marginTop: wp(3),
+    marginTop: vh(3),
   },
 });

@@ -13,7 +13,7 @@ import {
 import {Colors} from '../../utils/Colors';
 import axios from 'axios';
 
-const ViewAllTournaments = () => {
+const ViewAllTournaments = ({navigation: {goBack}}) => {
   const navigation = useNavigation();
   const [alltournamnet, setAllTournamnet] = useState({});
 
@@ -37,7 +37,7 @@ const ViewAllTournaments = () => {
   }, []);
   return (
     <View>
-      <Header showImage={false} tittle={Config.tournaments} backImage={true} />
+      <Header showImage={false} tittle={Config.tournaments} backImage={true}  onPress={() => goBack()} />
       <FlatList
         data={alltournamnet}
         horizontal={false}

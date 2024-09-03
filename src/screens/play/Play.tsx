@@ -1,25 +1,23 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Alert,
   Image,
   ScrollView,
-  StyleSheet,
   Text,
   TouchableOpacity,
-  View,
+  View
 } from 'react-native';
-import {scale as s, verticalScale as vh} from 'react-native-size-matters';
-import {useDispatch} from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { Cards, CardTittle } from '../../component';
 import Header from '../../component/Header';
-import {clearLoginData} from '../../store/Slice/LoginSlice';
-import {Banner} from '../../utils/assets';
-import {Colors} from '../../utils/Colors';
-import {Config} from '../../utils/Config';
-import {globalStyles} from '../../utils/GlobalCss';
-import {Cards, CardTittle} from '../../component';
-import { useNavigation } from '@react-navigation/native';
+import { clearLoginData } from '../../store/Slice/LoginSlice';
+import { Banner } from '../../utils/assets';
+import { Colors } from '../../utils/Colors';
+import { Config } from '../../utils/Config';
+import { globalStyles } from '../../utils/GlobalCss';
 
 const Play = () => {
   const navigation = useNavigation();
@@ -72,7 +70,6 @@ const Play = () => {
   };
 
   const viewall = () =>{
-    console.log("calleddd---------->>>>>")
     navigation.navigate("ViewAllTournaments")
   }
 
@@ -88,7 +85,6 @@ const Play = () => {
         backImage={false}
       />
       <ScrollView
-        // contentContainerStyle={{flexGrow: 1,paddingBottom: 20,justifyContent: 'center'}}
         style={globalStyles.screenSpacing}>
         <View style={{alignItems: 'center'}}>
           <Image source={Banner} style={{resizeMode: 'cover', width: '100%'}} />
@@ -115,18 +111,3 @@ const Play = () => {
 };
 export default Play;
 
-const styles = StyleSheet.create({
-  viewBtn: {
-    color: Colors.lightOrange,
-    fontSize: s(15),
-    fontFamily: Config.medium,
-  },
-  cardImg: {
-    height: vh(90),
-    width: s(160),
-    borderRadius: 12,
-  },
-  listContainer: {
-    paddingHorizontal: 5,
-  },
-});

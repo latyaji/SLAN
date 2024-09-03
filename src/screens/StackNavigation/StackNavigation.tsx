@@ -1,28 +1,24 @@
-import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import React, {useEffect} from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import React, { useEffect } from 'react';
 
-import Home from '../homedashboard/Home';
 import {
   Forgot,
   Internet,
   Login,
   Onboarding,
   OtpVerfication,
-  Play,
-  Settings,
   Signup,
   SplashScreen,
-  Track,
-  ViewAllTournaments,
+  ViewAllTournaments
 } from '../index';
-import LoginWithOtp from '../login/LoginWithOtp';
 import LoginOtpVerification from '../login/LoginOtpVerification';
+import LoginWithOtp from '../login/LoginWithOtp';
 
-import {setIsloggedin, setLogintoken} from '../../store/Slice/LoginSlice';
-import {useDispatch, useSelector} from 'react-redux';
-import {AppDispatch, RootState} from '../../store/Store';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useDispatch, useSelector } from 'react-redux';
+import { setIsloggedin, setLogintoken } from '../../store/Slice/LoginSlice';
+import { AppDispatch, RootState } from '../../store/Store';
 
 import BottomTab from '../BottomNavigation/BottomTab';
 
@@ -36,19 +32,17 @@ function StackNavigation() {
 
   const tokenStore = async () => {
     const getToken = await AsyncStorage.getItem('TOKEN');
-    if(getToken){
+    if (getToken) {
       dispatch(setLogintoken(getToken));
-      dispatch(setIsloggedin(true))
-    }else{
-      dispatch(setIsloggedin(false))
+      dispatch(setIsloggedin(true));
+    } else {
+      dispatch(setIsloggedin(false));
     }
-    
   };
   useEffect(() => {
     tokenStore();
-  },[]);
+  }, []);
 
-  
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{headerShown: false}}>
@@ -61,24 +55,24 @@ function StackNavigation() {
             <Stack.Screen name="OtpVerfication" component={OtpVerfication} />
             <Stack.Screen name="Forgot" component={Forgot} />
             <Stack.Screen name="LoginWithOtp" component={LoginWithOtp} />
-            <Stack.Screen name="LoginOtpVerification" component={LoginOtpVerification} />
+            <Stack.Screen
+              name="LoginOtpVerification"
+              component={LoginOtpVerification}
+            />
             <Stack.Screen name="Internet" component={Internet} />
           </>
         ) : (
           <>
             <Stack.Screen name="BottomTab" component={BottomTab} />
-            <Stack.Screen name="ViewAllTournaments" component={ViewAllTournaments} />
-            
-            
+            <Stack.Screen
+              name="ViewAllTournaments"
+              component={ViewAllTournaments}
+            />
           </>
         )}
-
-
       </Stack.Navigator>
     </NavigationContainer>
   );
-
-
 }
 
 export default StackNavigation;

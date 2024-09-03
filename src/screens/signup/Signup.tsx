@@ -7,24 +7,20 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  View
+  View,
 } from 'react-native';
-import {
-  heightPercentageToDP as hp,
-  widthPercentageToDP as wp,
-} from 'react-native-responsive-screen';
+
 import { useDispatch, useSelector } from 'react-redux';
 import Button from '../../component/Button';
 import Header from '../../component/Header';
 import TextField from '../../component/TextField';
 import {
-  clearSignupData,
   setChecked,
   setConfirmPassword,
   setErrorMessage,
   setName,
   setPassword,
-  setPhone,
+  setPhone
 } from '../../store/Slice/SignupSlice';
 import { AppDispatch, RootState } from '../../store/Store';
 import {
@@ -33,50 +29,28 @@ import {
   lockIcon,
   phoneIcon,
   UnCheckTermsIcon,
-  userIcon
+  userIcon,
 } from '../../utils/assets';
 import { Colors } from '../../utils/Colors';
 import { Config } from '../../utils/Config';
 import { globalStyles } from '../../utils/GlobalCss';
 
-const CustomAlert = ({visible, onClose, title}: any) => {
-  return (
-    <Modal
-      transparent={true}
-      visible={visible}
-      animationType="slide"
-      onRequestClose={onClose}>
-      <View style={styles.modalBackground}>
-        <View style={styles.alertContainer}>
-          <Text style={styles.heading}>Alert</Text>
-          <View style={globalStyles.alertBorder} />
-          <Image
-            source={alertIcon}
-            style={{
-              width: hp(10),
-              height: wp(10),
-              resizeMode: 'contain',
-              marginBottom: hp(2),
-              marginTop: hp(1),
-            }}
-          />
-          <Text style={styles.title}>{title}</Text>
-          <View style={globalStyles.alertBorder} />
-          <TouchableOpacity style={styles.cancelButton} onPress={onClose}>
-            <Text style={styles.cancelButtonText}>Cancel</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-    </Modal>
-  );
-};
+import HTMLView from 'react-native-htmlview';
+import {
+  scale as s,
+  verticalScale as vh
+} from 'react-native-size-matters';
+import CustomModal from '../../component/CustomModal';
 
-const Signup = ({navigation: {goBack}}) => {
+
+const Signup = ({navigation: {goBack}}:any) => {
   const navigation = useNavigation();
   const dispatch = useDispatch<AppDispatch>();
   const {name, phone, password, confirmPassword, checked, errorMessage} =
     useSelector((state: RootState) => state.signup);
   const [isAlertVisible, setAlertVisible] = useState(false);
+  const [terms, setterms] = useState('');
+  const [isModalVisible, setModalVisible] = useState(false);
 
   const isFormValid = () => {
     return (
@@ -112,7 +86,7 @@ const Signup = ({navigation: {goBack}}) => {
       )
       .then(response => {
         if (response.data) {
-          console.log("res------",response.data)
+          console.log('res------', response.data);
           navigation.navigate('OtpVerfication');
           // dispatch(clearSignupData())
         }
@@ -130,6 +104,31 @@ const Signup = ({navigation: {goBack}}) => {
   const hideAlert = () => {
     setAlertVisible(false);
   };
+
+  const showModal = () => {
+    termandcondition();
+    setModalVisible(true);
+  };
+
+  const hideModal = () => {
+    setModalVisible(false);
+  };
+
+  const termandcondition = () => {
+    axios
+      .post(
+        'https://dev-slansports.azurewebsites.net/Public/viewData/901/TermsAndCons_Card',
+      )
+      .then(response => {
+        if (response.data) {
+          setterms(response.data.data.root.rowData.TandC_Rules);
+        }
+      })
+      .catch(error => {
+        console.log('Error message: ', error.message);
+      });
+  };
+
   return (
     <View>
       <Header
@@ -153,7 +152,7 @@ const Signup = ({navigation: {goBack}}) => {
           value={phone}
           onChangeTxt={text => dispatch(setPhone(text))}
           maxLength={10}
-          mobilno={"+91-"}
+          mobilno={'+91-'}
         />
         <TextField
           placeholder={Config.enterPassword}
@@ -181,7 +180,9 @@ const Signup = ({navigation: {goBack}}) => {
               style={globalStyles.textIcon}
             />
           </TouchableOpacity>
-          <Text style={[globalStyles.regulareTxt, {color: Colors.blue}]}>
+          <Text
+            style={[globalStyles.regulareTxt, {color: Colors.blue}]}
+            onPress={showModal}>
             {Config.termsTxt}
           </Text>
         </View>
@@ -190,7 +191,7 @@ const Signup = ({navigation: {goBack}}) => {
           onPress={apicall}
           disabled={!isFormValid()}
         />
-        <View style={[globalStyles.centerTxt, {marginTop: wp(5)}]}>
+        <View style={[globalStyles.centerTxt, {marginTop: vh(5)}]}>
           <Text style={globalStyles.regulareTxt}>
             {Config.AlreadyUser}{' '}
             <Text
@@ -202,14 +203,30 @@ const Signup = ({navigation: {goBack}}) => {
         </View>
 
         <View style={styles.container}>
-          {/* <Button title="Show Alert" onPress={showAlert} /> */}
-          <CustomAlert
+          <CustomModal
             visible={isAlertVisible}
             onClose={hideAlert}
             title="This mobile number is already
                registered. Please signup with
               different mobile number."
+            image={alertIcon}
           />
+          <Modal
+            transparent={true}
+            visible={isModalVisible}
+            animationType="slide"
+            onRequestClose={hideModal}>
+            <View style={styles.modalBackground}>
+              <View style={styles.modalContainer}>
+                <HTMLView value={terms} stylesheet={styles.html} />
+                <TouchableOpacity
+                  style={styles.closeButton}
+                  onPress={hideModal}>
+                  <Text style={styles.closeButtonText}>{Config.close}</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </Modal>
         </View>
       </View>
     </View>
@@ -219,24 +236,11 @@ const Signup = ({navigation: {goBack}}) => {
 export default Signup;
 
 const styles = StyleSheet.create({
-  textInputContainer: {
-    borderBottomWidth: 2,
-    borderColor: Colors.Orange,
-    flexDirection: 'row',
-    alignItems: 'center',
-    width: hp(90),
-  },
-  textIcon: {
-    marginRight: 12,
-    width: hp(4),
-    height: wp(5),
-    resizeMode: 'contain',
-  },
-
   termsContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop: wp(3),
+    marginTop: vh(8),
+    paddingLeft:s(2)
   },
   container: {
     flex: 1,
@@ -249,160 +253,33 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
-  alertContainer: {
-    width: 300,
+  modalContainer: {
+    width: '90%',
     backgroundColor: '#fff',
-    borderRadius: 10,
-    padding: 20,
+    borderRadius: s(10),
+    padding: s(20),
     alignItems: 'center',
     shadowColor: '#000',
-    shadowOpacity: 0.2,
-    shadowRadius: 10,
+    shadowOpacity: 0.3,
+    shadowRadius: s(10),
     elevation: 5,
   },
-  heading: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginBottom: 10,
+  closeButton: {
+    marginTop: vh(20),
+    padding: s(10),
+    backgroundColor: '#007bff',
+    borderRadius: s(5),
   },
-  icon: {
-    marginBottom: 15,
+  closeButtonText: {
+    color: '#fff',
+    fontSize: s(16),
   },
-  title: {
-    fontSize: 16,
-    marginBottom: 20,
-  },
-  cancelButton: {
-    // backgroundColor: '#007bff',
-    padding: 10,
-    borderRadius: 5,
-  },
-  cancelButtonText: {
-    color: '#FE6725',
-    fontSize: 16,
+  html: {
+    fontSize: s(16),
+    color: '#333',
+    a: {
+      fontWeight: '300',
+      color: '#FF3366', 
+    },
   },
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// App.js
-
-// import React, { useState } from 'react';
-// import { Modal, View, Text, TouchableOpacity, StyleSheet, Button, Image } from 'react-native';
-// import { globalStyles } from '../../utils/GlobalCss';
-// import { alertIcon } from '../../utils/assets';
-// import { heightPercentageToDP as hp , widthPercentageToDP as wp } from 'react-native-responsive-screen';
-
-// const CustomAlert = ({ visible, onClose, title }:any) => {
-//   return (
-//     <Modal
-//       transparent={true}
-//       visible={visible}
-//       animationType="slide"
-//       onRequestClose={onClose}
-//     >
-//       <View style={styles.modalBackground}>
-//         <View style={styles.alertContainer}>
-//           <Text style={styles.heading}>Alert</Text>
-//           <View style={globalStyles.alertBorder}/>
-//           <Image source={alertIcon} style={{width:hp(10),height:wp(10),resizeMode:"contain",marginBottom:hp(2),marginTop:hp(1)}}/>
-//           <Text style={styles.title}>{title}</Text>
-//           <View style={globalStyles.alertBorder}/>
-//           <TouchableOpacity style={styles.cancelButton} onPress={onClose}>
-//             <Text style={styles.cancelButtonText}>Cancel</Text>
-//           </TouchableOpacity>
-//         </View>
-//       </View>
-//     </Modal>
-//   );
-// };
-
-// const Signup = () => {
-//   const [isAlertVisible, setAlertVisible] = useState(false);
-
-//   const showAlert = () => {
-//     setAlertVisible(true);
-//   };
-
-//   const hideAlert = () => {
-//     setAlertVisible(false);
-//   };
-
-//   return (
-//     <View style={styles.container}>
-//       <Button title="Show Alert" onPress={showAlert} />
-//       <CustomAlert
-//         visible={isAlertVisible}
-//         onClose={hideAlert}
-//         title="This mobile number is already
-//                registered. Please signup with
-//               different mobile number."
-//       />
-//     </View>
-//   );
-// };
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     justifyContent: 'center',
-//     alignItems: 'center',
-//   },
-//   modalBackground: {
-//     flex: 1,
-//     justifyContent: 'center',
-//     alignItems: 'center',
-//     backgroundColor: 'rgba(0, 0, 0, 0.5)',
-//   },
-//   alertContainer: {
-//     width: 300,
-//     backgroundColor: '#fff',
-//     borderRadius: 10,
-//     padding: 20,
-//     alignItems: 'center',
-//     shadowColor: '#000',
-//     shadowOpacity: 0.2,
-//     shadowRadius: 10,
-//     elevation: 5,
-//   },
-//   heading: {
-//     fontSize: 18,
-//     fontWeight: 'bold',
-//     marginBottom: 10,
-//   },
-//   icon: {
-//     marginBottom: 15,
-//   },
-//   title: {
-//     fontSize: 16,
-//     marginBottom: 20,
-//   },
-//   cancelButton: {
-//     // backgroundColor: '#007bff',
-//     padding: 10,
-//     borderRadius: 5,
-//   },
-//   cancelButtonText: {
-//     color: '#FE6725',
-//     fontSize: 16,
-//   },
-// });
-
-// export default Signup;

@@ -1,12 +1,13 @@
 import React from 'react';
 import {StyleSheet, Image, Text, TouchableOpacity} from 'react-native';
 import {Colors} from '../utils/Colors';
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from 'react-native-responsive-screen';
 import {Loader} from '../utils/assets';
 import { globalStyles } from '../utils/GlobalCss';
+import {
+  scale as s,
+  verticalScale as vh,
+  moderateScale as ms,
+} from 'react-native-size-matters';
 
 interface ButtonProps {
   tittle: string;
@@ -33,9 +34,9 @@ export default Button;
 const styles = StyleSheet.create({
   buttonView: {
     backgroundColor: Colors.Orange,
-    padding: 13,
-    borderRadius: 30,
-    marginTop: wp(5),
+    padding: vh(13),
+    borderRadius: s(30),
+    marginTop: vh(15),
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'row',

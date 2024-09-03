@@ -41,7 +41,10 @@ export const Config = {
     viewall:"View All",
     leagues:"Leagues",
     loginSuccessmsg:"Logged in Successful!",
-   incorrectUser: "Incorrect User Name (or) Passcode"
+   incorrectUser: "Incorrect User Name (or) Passcode",
+   otp:"OTP",
+   passcode:"Passcode",
+   close: "Close"
 
 
     

@@ -1,15 +1,21 @@
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
-import {Image, StyleSheet, Text, View, Dimensions, Alert} from 'react-native';
-import {slider1, slider2, slider3} from '../../utils/assets';
+import { Dimensions, Image, StyleSheet, Text, View } from 'react-native';
 import SwiperFlatList from 'react-native-swiper-flatlist';
-import {Colors} from '../../utils/Colors';
 import Button from '../../component/Button';
-import {Config} from '../../utils/Config';
-import {useNavigation} from '@react-navigation/native';
-import {globalStyles} from '../../utils/GlobalCss';
+import { slider1, slider2, slider3 } from '../../utils/assets';
+import { Colors } from '../../utils/Colors';
+import { Config } from '../../utils/Config';
+import { globalStyles } from '../../utils/GlobalCss';
+import {
+  scale as s,
+  verticalScale as vh,
+  moderateScale as ms,
+} from 'react-native-size-matters';
+
 
 const images = [slider1, slider2, slider3];
-const {width} = Dimensions.get('window'); // Get the width of the device's screen
+const {width} = Dimensions.get('window'); 
 
 const Onboarding = () => {
   const navigation = useNavigation();
@@ -40,7 +46,7 @@ const Onboarding = () => {
           paginationStyleItem={styles.paginationStyleItem}
           renderItem={({item}) => (
             <View style={styles.imageContainer}>
-              <Image source={item} style={{}} />
+              <Image source={item} />
               <Text style={styles.PlayTxt}>{Config.PlayTxt}</Text>
             </View>
           )}
@@ -56,7 +62,7 @@ const Onboarding = () => {
           style={{
             justifyContent: 'center',
             alignItems: 'center',
-            marginTop: 12,
+            marginTop: vh(12),
           }}>
           <Text style={globalStyles.centerTxt}>
             {Config.AlreadyUser}{' '}
@@ -76,9 +82,9 @@ export default Onboarding;
 
 const styles = StyleSheet.create({
   paginationStyleItem: {
-    width: 8,
-    height: 8,
-    marginHorizontal: 3,
+    width: s(8),
+    height: vh(8),
+    marginHorizontal: s(3),
   },
   topConatiner: {
     flex: 5,
@@ -88,16 +94,16 @@ const styles = StyleSheet.create({
   },
   PlayTxt: {
     fontWeight: 'bold',
-    fontSize: 20,
+    fontSize: s(16),
     color: Colors.black,
   },
   LoginTxt: {
     color: Colors.blue,
-    fontSize: 16,
+    fontSize: s(16),
     fontFamily: 'Ubuntu-Bold',
   },
   imageContainer: {
-    marginTop: 20,
+    marginTop: vh(20),
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#FFF',
