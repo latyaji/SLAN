@@ -1,35 +1,31 @@
-import React,{useEffect, useState} from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
+import React, {useEffect, useState} from 'react';
 import {
+  Alert,
+  Image,
+  ScrollView,
+  StyleSheet,
   Text,
   TouchableOpacity,
   View,
-  Image,
-  Alert,
-  StyleSheet,
-  FlatList,
 } from 'react-native';
+import {scale as s, verticalScale as vh} from 'react-native-size-matters';
+import {useDispatch} from 'react-redux';
 import Header from '../../component/Header';
+import {clearLoginData} from '../../store/Slice/LoginSlice';
+import {Banner} from '../../utils/assets';
+import {Colors} from '../../utils/Colors';
 import {Config} from '../../utils/Config';
 import {globalStyles} from '../../utils/GlobalCss';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {Colors} from '../../utils/Colors';
-import {clearLoginData} from '../../store/Slice/LoginSlice';
-import {useDispatch} from 'react-redux';
-import {Banner, card} from '../../utils/assets';
-import {
-  heightPercentageToDP as hp,
-  widthPercentageToDP as wp,
-} from 'react-native-responsive-screen';
-import {
-  scale as s,
-  verticalScale as vh,
-  moderateScale as ms,
-} from 'react-native-size-matters';
-import axios from 'axios';
+import {Cards, CardTittle} from '../../component';
+import { useNavigation } from '@react-navigation/native';
 
 const Play = () => {
+  const navigation = useNavigation();
   const dispatch = useDispatch();
-  const [tournamnet,setTournamnet] = useState({})
+  const [tournamnet, setTournamnet] = useState({});
+  const [leagues, setleagues] = useState({});
 
   const logout = async () => {
     try {
@@ -40,21 +36,19 @@ const Play = () => {
     dispatch(clearLoginData());
   };
 
+  useEffect(() => {
+    tournamnetApiCall();
+    leaguesApiCall();
+  }, []);
 
-  useEffect(()=>{
-    apicall()
-  },[])
-
-  const apicall = async () => {
+  const tournamnetApiCall = async () => {
     axios
       .post(
-        'https://dev-slansports.azurewebsites.net/Public/viewData/502/Alltournaments_Card',
+        'https://dev-slansports.azurewebsites.net/Public/viewData/5/Home_Tournaments',
       )
       .then(response => {
         if (response.data) {
-          // console.log('res------', JSON.stringify(response.data.data.root,null,2));
-          
-          setTournamnet(response.data.data.root.rowData_list)
+          setTournamnet(response.data.data.root.rowData_list);
         }
       })
       .catch(error => {
@@ -62,7 +56,30 @@ const Play = () => {
       });
   };
 
-  console.log("t-------->>>>>",tournamnet)
+  const leaguesApiCall = async () => {
+    axios
+      .post(
+        'https://dev-slansports.azurewebsites.net/Public/viewData/5001/Alltournaments_Card',
+      )
+      .then(response => {
+        if (response.data) {
+          setleagues(response.data.data.root.rowData);
+        }
+      })
+      .catch(error => {
+        console.log('Error message: ', error.message);
+      });
+  };
+
+  const viewall = () =>{
+    console.log("calleddd---------->>>>>")
+    navigation.navigate("ViewAllTournaments")
+  }
+
+  const fetchCardDetails = () =>{
+    Alert.alert("coming soon")
+  }
+
   return (
     <View>
       <Header
@@ -70,71 +87,14 @@ const Play = () => {
         tittle={Config.otpVerfication}
         backImage={false}
       />
-      <View style={globalStyles.screenSpacing}>
-        <Image source={Banner} />
-
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            marginTop: vh(14),
-          }}>
-          <Text style={globalStyles.mediumTxt}>{Config.tournaments}</Text>
-          <TouchableOpacity onPress={() => Alert.alert('Coming Soon')}>
-            <Text style={styles.viewBtn}>{Config.viewall}</Text>
-          </TouchableOpacity>
+      <ScrollView
+        // contentContainerStyle={{flexGrow: 1,paddingBottom: 20,justifyContent: 'center'}}
+        style={globalStyles.screenSpacing}>
+        <View style={{alignItems: 'center'}}>
+          <Image source={Banner} style={{resizeMode: 'cover', width: '100%'}} />
         </View>
-
-        <FlatList
-          data={tournamnet}
-          //keyExtractor={item => item.id}
-          horizontal={true}
-          showsHorizontalScrollIndicator={false} // Optional, hides the scrollbar
-          contentContainerStyle={styles.listContainer}
-          renderItem={({item}) => (            
-            <View
-              style={{
-                height: vh(200),
-                width: s(200),
-                borderWidth: 1,
-                marginTop: vh(12),
-                borderRadius: s(12),
-                borderColor: Colors.grey,
-                shadowColor: Colors.grey,
-                shadowOpacity: 0.2,
-                shadowRadius: 10,
-                alignItems: 'center',
-                backgroundColor: '#fff',
-                marginRight: s(10),
-              }}>
-              <View
-                style={{
-                  height: vh(100),
-                  width: s(160),
-                  marginTop: vh(12),
-                  borderRadius: s(12),
-                  shadowColor: '#000',
-                  shadowOpacity: 0.2,
-                  shadowRadius: 10,
-                  alignItems: 'center',
-                }}>
-                <Image source={{uri: item.Tournament_Image}} style={styles.cardImg} />
-              </View>
-              <Text style={globalStyles.regulareTxt}>
-               {item.Tournament_Name}
-              </Text>
-              <Text style={styles.viewBtn}>{item.TrnmtPeriod}</Text>
-              <Text
-                style={{
-                  fontFamily: Config.regular,
-                  fontSize: hp(1.6),
-                  color: '##595959',
-                }}>
-                {item.TrnmtSpclType}
-              </Text>
-            </View>
-          )}
-        />
+        <CardTittle title={Config.tournaments} onPress={viewall} />
+        <Cards carddata={tournamnet} onPress={fetchCardDetails} />
 
         <TouchableOpacity
           onPress={logout}
@@ -147,7 +107,9 @@ const Play = () => {
           }}>
           <Text style={globalStyles.regulareTxt}>Testing Logout</Text>
         </TouchableOpacity>
-      </View>
+
+        
+      </ScrollView>
     </View>
   );
 };
@@ -163,8 +125,6 @@ const styles = StyleSheet.create({
     height: vh(90),
     width: s(160),
     borderRadius: 12,
-    // resizeMode:"contain",
-    // marginTop:vh(12)
   },
   listContainer: {
     paddingHorizontal: 5,

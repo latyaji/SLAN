@@ -38,6 +38,7 @@ function BottomTab() {
         tabBarInactiveTintColor: '#000',
         tabBarStyle: styles.tabBarStyle,
         headerShown: false,
+        tabBarHideOnKeyboard: true
       })}>
       <Tab.Screen name="Play" component={Play} />
       <Tab.Screen name="Track" component={Track} />

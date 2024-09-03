@@ -153,6 +153,7 @@ const Signup = ({navigation: {goBack}}) => {
           value={phone}
           onChangeTxt={text => dispatch(setPhone(text))}
           maxLength={10}
+          mobilno={"+91-"}
         />
         <TextField
           placeholder={Config.enterPassword}

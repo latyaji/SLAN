@@ -60,10 +60,7 @@ const OtpVerification = () => {
         </Text>
         {success && (
           <Text
-            style={[
-              globalStyles.regulareTxt,
-              {alignSelf: 'center', color: Colors.success, marginTop: wp(3)},
-            ]}>
+            style={globalStyles.greenMsg}>
             {Config.otpVerifiedSuccess}
           </Text>
         )}

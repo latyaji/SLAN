@@ -9,7 +9,8 @@ export  const Colors = {
     aliceBlue:"#EEF6FE",
     red:"#FF0000",
     inputgrey:"#b1b5b2",
-    success:"#008000"
+    success:"#008000",
+    lesslightgrey:"#728192"
     
 
 }

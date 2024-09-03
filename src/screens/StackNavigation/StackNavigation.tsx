@@ -14,6 +14,7 @@ import {
   Signup,
   SplashScreen,
   Track,
+  ViewAllTournaments,
 } from '../index';
 import LoginWithOtp from '../login/LoginWithOtp';
 import LoginOtpVerification from '../login/LoginOtpVerification';
@@ -45,7 +46,6 @@ function StackNavigation() {
   };
   useEffect(() => {
     tokenStore();
-   // console.log('calleeddd', isLoggedin);
   },[]);
 
   
@@ -67,10 +67,13 @@ function StackNavigation() {
         ) : (
           <>
             <Stack.Screen name="BottomTab" component={BottomTab} />
+            <Stack.Screen name="ViewAllTournaments" component={ViewAllTournaments} />
             
             
           </>
         )}
+
+
       </Stack.Navigator>
     </NavigationContainer>
   );

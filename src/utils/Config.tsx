@@ -1,5 +1,9 @@
 export const Config = {
     InternetTxt : "No Internet Connection",
+    noConnection:"NO INTERNET CONNECTION",
+    CheckIntrenet:"Please Check Your Network Connection",
+    tryAgain:"and Try Again",
+    retry:"Retry",
     PlayTxt : "Play Your Game Any Time, Any where !!!....",
     AlreadyUser : "Already Registered User?",
     LoginTxt : "Login",
@@ -10,7 +14,7 @@ export const Config = {
     SignHeading : "Enter Signup Details",
     otpVerfication :  "OTP Verification",
     entername : "Enter Name ",
-    enterPhone : "+91-Enter Mobile Number  ",
+    enterPhone : "Enter Mobile Number  ",
     enterPassword : "Enter 4 digit Passcode ",
     enterConfirmPassword : "Re-Enter Passcode ",
     termsTxt : "Terms & Conditions",
@@ -34,7 +38,10 @@ export const Config = {
     loginwithotp:"Login with OTP",
     verifyotp : "Verify OTP",
     tournaments: "Tournaments",
-    viewall:"View All"
+    viewall:"View All",
+    leagues:"Leagues",
+    loginSuccessmsg:"Logged in Successful!",
+   incorrectUser: "Incorrect User Name (or) Passcode"
 
 
     

@@ -7,6 +7,7 @@ export const goback = require("../utils/assets/Back.png")
 export const smalllogo = require("../utils/assets/smalllogo.png")
 export const Banner = require("../utils/assets/HomeBanner.png")
 export const card = require("../utils/assets/TournamentImg.png")
+export const noImage = require("../utils/assets/noImg.png")
 
 
 
@@ -24,3 +25,5 @@ export const Loader = require("../utils/assets/Icons/LoaderIcon.png")
 export const PlayIcon = require("../utils/assets/Icons/playIcon.png")
 export const TrackIcon = require("../utils/assets/Icons/trackIcon.png")
 export const SettingsIcon = require("../utils/assets/Icons/settingIcon.png")
+export const WifiIcon = require("../utils/assets/Icons/nowifi.png")
+export const Warn = require("../utils/assets/Icons/warningIcon.png")

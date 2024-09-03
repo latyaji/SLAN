@@ -12,7 +12,7 @@ import Play from "./play/Play";
 import Settings from "./settings/Settings";
 import BottomTab from "./BottomNavigation/BottomTab";
 import Internet from "./InternetCheck/Internet"
-
+import ViewAllTournaments from "./tournaments/ViewAllTournaments"
 
 export {
     Signup,
@@ -28,6 +28,7 @@ export {
     Play,
     Settings,
     BottomTab,
-    Internet
+    Internet,
+    ViewAllTournaments
 
 }

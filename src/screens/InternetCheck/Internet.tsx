@@ -1,20 +1,30 @@
 import React from 'react';
-import {View,Text} from 'react-native';
+import { Image, Text, TouchableOpacity, View } from 'react-native';
+import { s } from 'react-native-size-matters';
 import Header from '../../component/Header';
 import { Config } from '../../utils/Config';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { globalStyles } from '../../utils/GlobalCss';
+import { WifiIcon } from '../../utils/assets';
 
 
 const Internet = () => {
   return (
-    <View>
+    <View style={{flex:1}}>
       <Header
         showImage={true}
         tittle={Config.otpVerfication}
         backImage={false}
       />
-      <Text>Check Internet</Text>
-      <Icon name="delete" size={25} color={'#000'} />
+      <View style={{flex:1,justifyContent:"center",alignItems:"center"}}>
+        <Image source={WifiIcon}/>
+        <Text style={globalStyles.noConectiontxt}>{Config.noConnection}</Text>
+        <Text style={{fontSize:s(15)}}>{Config.CheckIntrenet}</Text>
+        <Text style={{fontSize:s(15)}}>{Config.tryAgain}</Text>
+        <TouchableOpacity style={globalStyles.smallButton}>
+          <Text style={globalStyles.whiteTxt}>{Config.retry}</Text>
+        </TouchableOpacity>
+      </View>
+      
     </View>
   );
 };

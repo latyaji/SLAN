@@ -6,6 +6,7 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import {Loader} from '../utils/assets';
+import { globalStyles } from '../utils/GlobalCss';
 
 interface ButtonProps {
   tittle: string;
@@ -22,7 +23,7 @@ const Button = ({tittle, onPress, disabled,showImage}: ButtonProps) => {
       disabled={disabled}>
         {showImage && <Image source={Loader} />}
       
-      <Text style={styles.buttonTxt}>{tittle}</Text>
+      <Text style={globalStyles.whiteTxt}>{tittle}</Text>
     </TouchableOpacity>
   );
 };
@@ -41,13 +42,6 @@ const styles = StyleSheet.create({
   },
   buttonDisabled: {
     backgroundColor: '#ed9c79',
-    opacity: 0.6, // Adjust color for disabled state
-  },
-  buttonTxt: {
-    color: Colors.White,
-    fontSize: 18,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    marginLeft: hp(0.5),
-  },
+    opacity: 0.6, 
+  }
 });

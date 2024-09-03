@@ -3,7 +3,8 @@ import {
   Image,
   StyleSheet,
   TextInput,
-  View
+  View,
+  Text
 } from 'react-native';
 import {
   heightPercentageToDP as hp,
@@ -11,6 +12,8 @@ import {
 } from 'react-native-responsive-screen';
 import { Colors } from '../utils/Colors';
 import { globalStyles } from '../utils/GlobalCss';
+import { s } from 'react-native-size-matters';
+import { Config } from '../utils/Config';
 
 interface TextFieldProps  {
   placeholder: string;
@@ -19,15 +22,17 @@ interface TextFieldProps  {
   value: string; 
   onChangeTxt: (text: string) => void;
   secureTextEntry?: boolean;
-  maxLength:number
+  maxLength:number;
+  mobilno:string
 }
 
-const TextField = ({ placeholder, source, keyboardType, value, onChangeTxt,secureTextEntry,maxLength }:TextFieldProps) => {
+const TextField = ({ placeholder, source, keyboardType, value, onChangeTxt,secureTextEntry,maxLength,mobilno }:TextFieldProps) => {
   return (
     <View style={styles.textInputContainer}>
       <Image 
        source={source} 
        style={styles.textIcon} />
+       <Text style={{color:Colors.black,fontSize:s(16),fontFamily:Config.medium}}>{mobilno}</Text>
       <TextInput
         placeholder={placeholder}
         placeholderTextColor="#b1b5b2"
@@ -37,6 +42,7 @@ const TextField = ({ placeholder, source, keyboardType, value, onChangeTxt,secur
         value={value} 
         secureTextEntry={secureTextEntry}
         maxLength={maxLength}
+        
        />
     </View>
   );
