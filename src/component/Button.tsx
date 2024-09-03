@@ -33,7 +33,7 @@ export default Button;
 
 const styles = StyleSheet.create({
   buttonView: {
-    backgroundColor: Colors.Orange,
+    backgroundColor: Colors.lightOrange,
     padding: vh(13),
     borderRadius: s(30),
     marginTop: vh(15),

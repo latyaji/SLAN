@@ -44,7 +44,8 @@ export const Config = {
    incorrectUser: "Incorrect User Name (or) Passcode",
    otp:"OTP",
    passcode:"Passcode",
-   close: "Close"
+   close: "Close",
+  entercorrectmobile: "*Enter registered mobile number ! "
 
 
     

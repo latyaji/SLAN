@@ -59,15 +59,11 @@ const Onboarding = () => {
           onPress={() => navigation.navigate('Signup')}
         />
         <View
-          style={{
-            justifyContent: 'center',
-            alignItems: 'center',
-            marginTop: vh(12),
-          }}>
-          <Text style={globalStyles.centerTxt}>
+          style={[globalStyles.centerTxt, {marginTop: vh(5)}]}>
+          <Text style={globalStyles.regulareTxt}>
             {Config.AlreadyUser}{' '}
             <Text
-              style={styles.LoginTxt}
+              style={globalStyles.boldblueTxt}
               onPress={() => navigation.navigate('Login')}>
               {Config.LoginTxt}
             </Text>

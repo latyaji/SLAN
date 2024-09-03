@@ -4,7 +4,11 @@ import axios from 'axios';
 import React, {useEffect, useState} from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {RadioButton} from 'react-native-paper';
-import {s, vs} from 'react-native-size-matters';
+import {
+  scale as s,
+  verticalScale as vh,
+  moderateScale as ms,
+} from 'react-native-size-matters';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {useDispatch, useSelector} from 'react-redux';
 import Button from '../../component/Button';
@@ -32,7 +36,7 @@ const Login = ({navigation: {goBack}}: any) => {
     (state: RootState) => state.login,
   );
 
-  const apicall = () => {
+  const loginapi = () => {
     axios
       .post(
         'https://dev-slansports.azurewebsites.net/Account/LogOn/primary',
@@ -58,7 +62,6 @@ const Login = ({navigation: {goBack}}: any) => {
       })
       .catch(error => {
         setLoginMsg({text: 'Incorrect User Name (or) Passcode', type: 'error'});
-        //navigation.navigate('Signup');
         console.log('Error message: ', error.message);
       });
   };
@@ -103,6 +106,8 @@ const Login = ({navigation: {goBack}}: any) => {
           maxLength={10}
           mobilno={'+91-'}
         />
+        {/* {loginMsg.type !== 'success' && <Text style={globalStyles.errormsg}>{Config.entercorrectmobile}</Text> } */}
+        
         <View style={styles.radioGroup}>
           <View style={styles.radioButton}>
             <RadioButton.Android
@@ -137,10 +142,10 @@ const Login = ({navigation: {goBack}}: any) => {
         </TouchableOpacity>
         <Button
           tittle={Config.login}
-          onPress={apicall}
+          onPress={loginapi}
           disabled={!isFormValid()}
         />
-        <View style={[globalStyles.centerTxt, {marginTop: vs(5)}]}>
+        <View style={[globalStyles.centerTxt, {marginTop: vh(5)}]}>
           <Text style={globalStyles.regulareTxt}>
             {Config.newuser}
             {'  '}
@@ -157,13 +162,13 @@ const Login = ({navigation: {goBack}}: any) => {
               flexDirection: 'row',
               alignItems: 'center',
               justifyContent: 'center',
+              
             }}>
             {loginMsg.type !== 'success' && (
               <Icon
                 name="warning"
                 size={22}
                 color={'#FFCE31'}
-                style={{marginTop: vs(12)}}
               />
             )}
             <Text

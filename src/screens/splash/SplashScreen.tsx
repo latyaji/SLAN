@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Image, StyleSheet, StatusBar, View, Text} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import NetInfo from '@react-native-community/netinfo';
@@ -20,6 +20,8 @@ const SplashScreen = () => {
   const isConnected = useSelector(
     (state: RootState) => state.network.isConnected,
   );
+  const [isCheckingConnection, setIsCheckingConnection] = useState(true);
+
   const navigation = useNavigation();
 
   useEffect(() => {
@@ -37,6 +39,8 @@ const SplashScreen = () => {
     };
   }, [dispatch, navigation]);
 
+
+ 
   return (
     <View style={styles.container}>
       {!isConnected && (

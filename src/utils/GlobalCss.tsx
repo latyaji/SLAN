@@ -44,9 +44,10 @@ export const globalStyles = StyleSheet.create({
   },
   errormsg: {
     fontFamily: Config.regular,
-    fontSize: s(1.8),
+    fontSize: s(12),
     alignSelf: 'flex-end',
     color: Colors.red,
+    marginTop:vh(5)
     
   },
   
@@ -125,14 +126,14 @@ export const globalStyles = StyleSheet.create({
   },
   loginSuccessMsg: {
     fontFamily: Config.medium,
-    fontSize: s(2.2),
+    fontSize: s(13),
     alignSelf: 'center',
     color: Colors.success,
     marginTop: vh(3),
   },
   loginFailedMsg: {
     fontFamily: Config.medium,
-    fontSize: s(2.2),
+    fontSize: s(13),
     alignSelf: 'center',
     color: Colors.red,
     marginTop: vh(3),
