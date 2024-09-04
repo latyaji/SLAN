@@ -15,6 +15,7 @@ import Button from '../../component/Button';
 import Header from '../../component/Header';
 import TextField from '../../component/TextField';
 import {
+  setIsloading,
   setIsloggedin,
   setLoginPassword,
   setLoginPhone,
@@ -37,6 +38,7 @@ const Login = ({navigation: {goBack}}: any) => {
   );
 
   const loginapi = () => {
+    dispatch(setIsloading(true))
     axios
       .post(
         'https://dev-slansports.azurewebsites.net/Account/LogOn/primary',
@@ -51,6 +53,7 @@ const Login = ({navigation: {goBack}}: any) => {
         },
       )
       .then(response => {
+        dispatch(setIsloading(false))
         if (response.data) {
           if (response.data.access_token) {
             AsyncStorage.setItem('TOKEN', response.data.access_token);
@@ -61,6 +64,7 @@ const Login = ({navigation: {goBack}}: any) => {
         }
       })
       .catch(error => {
+        dispatch(setIsloading(false))
         setLoginMsg({text: 'Incorrect User Name (or) Passcode', type: 'error'});
         console.log('Error message: ', error.message);
       });

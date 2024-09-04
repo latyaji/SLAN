@@ -6,6 +6,7 @@ interface LoginState {
   loginPassword : string
   isLoggedin:boolean
   accesstoken : string | null
+  loader: boolean
 
 }
 
@@ -14,7 +15,8 @@ const initialState: LoginState = {
   loginPhone : "",
   loginPassword : "",
   isLoggedin : false,
-  accesstoken:null
+  accesstoken:null,
+  loader : false
     
 };
 
@@ -38,8 +40,11 @@ const loginSlice = createSlice({
       clearLoginData(state) {
         return initialState;
       },
+      setIsloading(state,action: PayloadAction<boolean>){
+        state.loader = action.payload
+      },
   },
 });
 
-export const { setLoginPhone, setLoginPassword,setIsloggedin,setLogintoken,clearLoginData } = loginSlice.actions;
+export const { setLoginPhone, setLoginPassword,setIsloggedin,setLogintoken,clearLoginData,setIsloading } = loginSlice.actions;
 export default loginSlice.reducer;

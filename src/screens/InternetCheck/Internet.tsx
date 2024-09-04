@@ -6,8 +6,11 @@ import { Config } from '../../utils/Config';
 import { globalStyles } from '../../utils/GlobalCss';
 import { WifiIcon } from '../../utils/assets';
 
+interface InternetProps{
+  onRetry: ()=> void
+}
 
-const Internet = () => {
+const Internet = ({onRetry}:InternetProps) => {
   return (
     <View style={{flex:1}}>
       <Header
@@ -20,7 +23,9 @@ const Internet = () => {
         <Text style={globalStyles.noConectiontxt}>{Config.noConnection}</Text>
         <Text style={{fontSize:s(15)}}>{Config.CheckIntrenet}</Text>
         <Text style={{fontSize:s(15)}}>{Config.tryAgain}</Text>
-        <TouchableOpacity style={globalStyles.smallButton}>
+        <TouchableOpacity 
+         onPress={onRetry}
+         style={globalStyles.smallButton}>
           <Text style={globalStyles.whiteTxt}>{Config.retry}</Text>
         </TouchableOpacity>
       </View>

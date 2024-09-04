@@ -92,6 +92,7 @@ const Play = () => {
         <CardTittle title={Config.tournaments} onPress={viewall} />
         <Cards carddata={tournamnet} onPress={fetchCardDetails} />
 
+       
         <TouchableOpacity
           onPress={logout}
           style={{

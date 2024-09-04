@@ -1,3 +1,4 @@
+import NetInfo from '@react-native-community/netinfo';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface NetworkState {
@@ -20,3 +21,14 @@ const networkSlice = createSlice({
 
 export const { setConnectionStatus } = networkSlice.actions;
 export default networkSlice.reducer;
+
+
+// Setup network listener
+export const initializeNetworkListener = () => (dispatch) => {
+  const unsubscribe = NetInfo.addEventListener((state) => {
+    dispatch(setConnectionStatus(state.isConnected));
+  });
+
+  // Cleanup the listener on unmount
+  return () => unsubscribe();
+};

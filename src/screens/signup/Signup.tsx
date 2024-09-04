@@ -35,12 +35,17 @@ import { Colors } from '../../utils/Colors';
 import { Config } from '../../utils/Config';
 import { globalStyles } from '../../utils/GlobalCss';
 
+
 import HTMLView from 'react-native-htmlview';
 import {
   scale as s,
   verticalScale as vh
 } from 'react-native-size-matters';
 import CustomModal from '../../component/CustomModal';
+import { setIsloading } from '../../store/Slice/LoginSlice';
+import Loader from '../../component/Loader';
+import Internet from '../InternetCheck/Internet';
+import { initializeNetworkListener } from '../../store/Slice/NetworkSlice';
 
 
 const Signup = ({navigation: {goBack}}:any) => {
@@ -48,6 +53,8 @@ const Signup = ({navigation: {goBack}}:any) => {
   const dispatch = useDispatch<AppDispatch>();
   const {name, phone, password, confirmPassword, checked, errorMessage} =
     useSelector((state: RootState) => state.signup);
+   const isConnected = useSelector((state) => state.network.isConnected);
+
   const [isAlertVisible, setAlertVisible] = useState(false);
   const [terms, setterms] = useState('');
   const [isModalVisible, setModalVisible] = useState(false);
@@ -62,13 +69,14 @@ const Signup = ({navigation: {goBack}}:any) => {
     );
   };
 
-  const apicall = () => {
+  const signupApi = () => {
     if (password !== confirmPassword) {
       dispatch(setErrorMessage('*Passcode mismatch'));
       return;
     }
 
     dispatch(setErrorMessage(''));
+    dispatch(setIsloading(true))
     axios
       .post(
         'https://dev-slansports.azurewebsites.net/Account/Register',
@@ -85,6 +93,7 @@ const Signup = ({navigation: {goBack}}:any) => {
         },
       )
       .then(response => {
+        dispatch(setIsloading(false))
         if (response.data) {
           console.log('res------', response.data);
           navigation.navigate('OtpVerfication');
@@ -92,6 +101,7 @@ const Signup = ({navigation: {goBack}}:any) => {
         }
       })
       .catch(error => {
+        dispatch(setIsloading(false))
         console.log('Error message: ', error.message);
         showAlert();
       });
@@ -115,23 +125,36 @@ const Signup = ({navigation: {goBack}}:any) => {
   };
 
   const termandcondition = () => {
+    dispatch(setIsloading(true))
     axios
       .post(
         'https://dev-slansports.azurewebsites.net/Public/viewData/901/TermsAndCons_Card',
       )
       .then(response => {
+        dispatch(setIsloading(false))
         if (response.data) {
           setterms(response.data.data.root.rowData.TandC_Rules);
         }
       })
       .catch(error => {
+        dispatch(setIsloading(false))
         console.log('Error message: ', error.message);
       });
   };
+  const handleRetry = () => {
+    // You can put your recheck logic here if needed
+    // For example, you might dispatch a network check action again
+    dispatch(initializeNetworkListener());
+  };
 
   return (
-    <View>
-      <Header
+    
+    <View style={{flex:1}}>
+        {!isConnected ? (
+        <Internet onRetry={handleRetry} />
+      ) : (
+        <>
+          <Header
         showImage={true}
         tittle={Config.otpVerfication}
         onPress={() => goBack()}
@@ -188,7 +211,7 @@ const Signup = ({navigation: {goBack}}:any) => {
         </View>
         <Button
           tittle={Config.signupTxt}
-          onPress={apicall}
+          onPress={signupApi}
           disabled={!isFormValid()}
         />
         <View style={[globalStyles.centerTxt, {marginTop: vh(5)}]}>
@@ -229,7 +252,10 @@ const Signup = ({navigation: {goBack}}:any) => {
           </Modal>
         </View>
       </View>
-    </View>
+        </>
+       )
+    
+      }</View> 
   );
 };
 

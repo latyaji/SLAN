@@ -21,12 +21,14 @@ import { setIsloggedin, setLogintoken } from '../../store/Slice/LoginSlice';
 import { AppDispatch, RootState } from '../../store/Store';
 
 import BottomTab from '../BottomNavigation/BottomTab';
+import { ActivityIndicator, StatusBar } from 'react-native';
+import Loader from '../../component/Loader';
 
 const Stack = createNativeStackNavigator();
 
 function StackNavigation() {
   const dispatch = useDispatch<AppDispatch>();
-  const {isLoggedin, accesstoken} = useSelector(
+  const {isLoggedin, loader} = useSelector(
     (state: RootState) => state.login,
   );
 
@@ -45,6 +47,7 @@ function StackNavigation() {
 
   return (
     <NavigationContainer>
+       {loader && <Loader/>}
       <Stack.Navigator screenOptions={{headerShown: false}}>
         {!isLoggedin ? (
           <>
