@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Image,
   Modal,
@@ -95,7 +95,6 @@ const Signup = ({navigation: {goBack}}:any) => {
       .then(response => {
         dispatch(setIsloading(false))
         if (response.data) {
-          console.log('res------', response.data);
           navigation.navigate('OtpVerfication');
           // dispatch(clearSignupData())
         }
@@ -142,10 +141,10 @@ const Signup = ({navigation: {goBack}}:any) => {
       });
   };
   const handleRetry = () => {
-    // You can put your recheck logic here if needed
-    // For example, you might dispatch a network check action again
     dispatch(initializeNetworkListener());
   };
+
+  useEffect(()=>{termandcondition},[])
 
   return (
     

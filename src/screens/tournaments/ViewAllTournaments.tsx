@@ -12,22 +12,31 @@ import {
 } from 'react-native-size-matters';
 import {Colors} from '../../utils/Colors';
 import axios from 'axios';
+import { AppDispatch, RootState } from '../../store/Store';
+import { useDispatch, useSelector } from 'react-redux';
+import { setIsloading } from '../../store/Slice/LoginSlice';
+
+
 
 const ViewAllTournaments = ({navigation: {goBack}}:any) => {
   const navigation = useNavigation();
+  const dispatch = useDispatch<AppDispatch>();
   const [alltournamnet, setAllTournamnet] = useState({});
 
   const viewalltournamnetApiCall = async () => {
+    dispatch(setIsloading(true))
     axios
       .post(
         'https://dev-slansports.azurewebsites.net/Public/viewData/5001/Alltournaments_Card',
       )
       .then(response => {
+        dispatch(setIsloading(false))
         if (response.data) {
           setAllTournamnet(response.data.data.root.rowData);
         }
       })
       .catch(error => {
+        dispatch(setIsloading(false))
         console.log('Error message: ', error.message);
       });
   };
