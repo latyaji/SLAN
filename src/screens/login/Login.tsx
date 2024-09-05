@@ -149,12 +149,12 @@ const Login = ({navigation: {goBack}}: any) => {
           onPress={loginapi}
           disabled={!isFormValid()}
         />
-        <View style={[globalStyles.centerTxt, {marginTop: vh(5)}]}>
-          <Text style={globalStyles.regulareTxt}>
+        <View style={globalStyles.centerTxt}>
+          <Text style={globalStyles.alreadyTxt}>
             {Config.newuser}
             {'  '}
             <Text
-              style={globalStyles.boldblueTxt}
+              style={globalStyles.smallbluetxt}
               onPress={() => navigation.navigate('Signup')}>
               {Config.createaccount}
             </Text>
@@ -166,7 +166,7 @@ const Login = ({navigation: {goBack}}: any) => {
               flexDirection: 'row',
               alignItems: 'center',
               justifyContent: 'center',
-              
+              marginTop:vh(16)
             }}>
             {loginMsg.type !== 'success' && (
               <Icon

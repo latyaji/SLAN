@@ -213,11 +213,11 @@ const Signup = ({navigation: {goBack}}:any) => {
           onPress={signupApi}
           disabled={!isFormValid()}
         />
-        <View style={[globalStyles.centerTxt, {marginTop: vh(5)}]}>
-          <Text style={globalStyles.regulareTxt}>
-            {Config.AlreadyUser}{' '}
+        <View style={globalStyles.centerTxt}>
+          <Text style={globalStyles.alreadyTxt}>
+            {Config.AlreadyUser}{'  '}
             <Text
-              style={globalStyles.boldblueTxt}
+              style={globalStyles.smallbluetxt}
               onPress={() => navigation.navigate('Login')}>
               {Config.LoginTxt}
             </Text>

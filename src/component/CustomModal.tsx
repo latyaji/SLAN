@@ -6,6 +6,8 @@ import {
   verticalScale as vh,
   moderateScale as ms,
 } from 'react-native-size-matters';
+import { Config } from "../utils/Config";
+import { Colors } from "../utils/Colors";
 
 
 interface CustomModalProps{
@@ -29,11 +31,11 @@ const CustomModal = ({visible,onClose,title,image}:CustomModalProps) =>{
             <Image
               source={image}
               style={{
-                width: s(10),
-                height: vh(10),
+                width: s(27),
+                height: vh(25),
                 resizeMode: 'contain',
                 marginBottom: vh(2),
-                marginTop: vh(1),
+                marginTop: vh(8),
               }}
             />
             <Text style={styles.title}>{title}</Text>
@@ -52,28 +54,32 @@ export default CustomModal
 
 const styles = StyleSheet.create({
     title: {
-        fontSize: 16,
-        marginBottom: 20,
+        fontSize: s(14),
+        marginBottom: vh(15),
+        fontFamily:Config.regular,
+        color: Colors.black,
+        textAlign:"center"
       },
       cancelButton: {
         // backgroundColor: '#007bff',
-        padding: 10,
-        borderRadius: 5,
+        padding: s(10),
+        borderRadius: s(5),
       },
       cancelButtonText: {
         color: '#FE6725',
-        fontSize: 16,
+        fontSize: s(16),
+        fontFamily:Config.regular
       },
       modalBackground: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        backgroundColor: 'rgba(255, 255, 255, 0.9)',
       },
       alertContainer: {
         width: 300,
         backgroundColor: '#fff',
-        borderRadius: 10,
+        borderRadius: 35,
         padding: s(20),
         alignItems: 'center',
         shadowColor: '#000',
@@ -83,8 +89,9 @@ const styles = StyleSheet.create({
       },
       heading: {
         fontSize: s(18),
-        fontWeight: 'bold',
+        fontFamily:Config.medium,
         marginBottom: vh(10),
+        color:Colors.black
       },
        html: {
     fontSize: s(14), // Adjust as needed

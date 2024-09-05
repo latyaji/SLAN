@@ -19,6 +19,16 @@ export const globalStyles = StyleSheet.create({
     fontSize: s(16),
     color: '#000',
   },
+  alreadyTxt: {
+    fontFamily: Config.regular,
+    fontSize: s(14),
+    color: '#000',
+  },
+  smallbluetxt:{
+    fontFamily: Config.medium,
+    fontSize: s(13),
+    color: Colors.blue,
+  },
   smallTxt: {
     fontFamily: Config.regular,
     fontSize: s(12),
@@ -41,6 +51,7 @@ export const globalStyles = StyleSheet.create({
   },
   centerTxt: {
     alignItems: 'center',
+    marginTop: vh(8)
   },
   errormsg: {
     fontFamily: Config.regular,

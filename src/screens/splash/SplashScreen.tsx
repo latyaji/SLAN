@@ -25,16 +25,16 @@ const SplashScreen = () => {
   const navigation = useNavigation();
 
   useEffect(() => {
-    const unsubscribe = NetInfo.addEventListener(state => {
-      dispatch(setConnectionStatus(state.isConnected));
-    });
+    // const unsubscribe = NetInfo.addEventListener(state => {
+    //   dispatch(setConnectionStatus(state.isConnected));
+    // });
 
     const timer = setTimeout(() => {
       navigation.navigate('Onboarding');
     }, 3000);
 
     return () => {
-      unsubscribe();
+      //unsubscribe();
       clearTimeout(timer);
     };
   }, [dispatch, navigation]);
@@ -43,9 +43,9 @@ const SplashScreen = () => {
  
   return (
     <View style={styles.container}>
-      {!isConnected && (
+      {/* {!isConnected && (
         <Text style={styles.ConnectionTxt}>{Config.InternetTxt}</Text>
-      )}
+      )} */}
 
       <StatusBar
         backgroundColor="transparent"
@@ -55,9 +55,9 @@ const SplashScreen = () => {
       />
 
       <Image source={Slan} />
-      {!isConnected && (
+      {/* {!isConnected && (
         <Image source={dot} style={{height: vh(50), resizeMode: 'cover'}} />
-      )}
+      )} */}
     </View>
   );
 };

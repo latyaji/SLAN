@@ -60,10 +60,10 @@ const Onboarding = () => {
         />
         <View
           style={[globalStyles.centerTxt, {marginTop: vh(5)}]}>
-          <Text style={globalStyles.regulareTxt}>
+          <Text style={globalStyles.alreadyTxt}>
             {Config.AlreadyUser}{' '}
             <Text
-              style={globalStyles.boldblueTxt}
+              style={globalStyles.smallbluetxt}
               onPress={() => navigation.navigate('Login')}>
               {Config.LoginTxt}
             </Text>

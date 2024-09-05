@@ -62,7 +62,7 @@ function StackNavigation() {
               name="LoginOtpVerification"
               component={LoginOtpVerification}
             />
-            <Stack.Screen name="Internet" component={Internet} />
+            {/* <Stack.Screen name="Internet" component={Internet} /> */}
           </>
         ) : (
           <>

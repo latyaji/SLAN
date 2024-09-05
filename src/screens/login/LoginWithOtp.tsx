@@ -72,7 +72,7 @@ const LoginWithOtp = ({navigation: {goBack}}) => {
         />
         <Text
           style={[
-            globalStyles.regulareTxt,
+            globalStyles.alreadyTxt,
             {color: Colors.blue, alignSelf: 'center', marginTop: vh(3)},
           ]}>
           {Config.resendOtp}
