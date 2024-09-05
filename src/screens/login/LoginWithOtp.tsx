@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   otpContainer: {
-    width: '95%',
+    // width: '95%',
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginVertical: 20,
