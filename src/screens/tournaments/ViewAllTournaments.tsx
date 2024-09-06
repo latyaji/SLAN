@@ -27,12 +27,12 @@ const ViewAllTournaments = ({navigation: {goBack}}:any) => {
     dispatch(setIsloading(true))
     axios
       .post(
-        'https://dev-slansports.azurewebsites.net/Public/viewData/5001/Alltournaments_Card',
+        'https://dev-slansports.azurewebsites.net/Public/viewData/502/Alltournaments_Card',
       )
       .then(response => {
         dispatch(setIsloading(false))
         if (response.data) {
-          setAllTournamnet(response.data.data.root.rowData);
+          setAllTournamnet(response.data.data.root.rowData_list);
         }
       })
       .catch(error => {

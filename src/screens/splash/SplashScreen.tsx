@@ -1,18 +1,15 @@
-import React, {useEffect, useState} from 'react';
-import {Image, StyleSheet, StatusBar, View, Text} from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
-import NetInfo from '@react-native-community/netinfo';
-import {RootState, AppDispatch} from '../../store/Store';
-import {setConnectionStatus} from '../../store/Slice/NetworkSlice';
-import {Colors} from '../../utils/Colors';
-import {dot, Slan} from '../../utils/assets';
-import {Config} from '../../utils/Config';
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
+import React, { useEffect, useState } from 'react';
+import { Image, StatusBar, StyleSheet, View } from 'react-native';
 import {
   scale as s,
-  verticalScale as vh,
-  moderateScale as ms,
+  verticalScale as vh
 } from 'react-native-size-matters';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../../store/Store';
+import { Slan } from '../../utils/assets';
+import { Colors } from '../../utils/Colors';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 const SplashScreen = () => {
@@ -28,6 +25,7 @@ const SplashScreen = () => {
     // const unsubscribe = NetInfo.addEventListener(state => {
     //   dispatch(setConnectionStatus(state.isConnected));
     // });
+    AsyncStorage.setItem('Spalshscreenshowfirsttime', 'true');
 
     const timer = setTimeout(() => {
       navigation.navigate('Onboarding');

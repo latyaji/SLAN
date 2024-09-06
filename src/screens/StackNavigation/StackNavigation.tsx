@@ -1,6 +1,6 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import React, { useEffect } from 'react';
+import React, { useEffect, useLayoutEffect } from 'react';
 
 import {
   Forgot,
@@ -17,7 +17,7 @@ import LoginWithOtp from '../login/LoginWithOtp';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useDispatch, useSelector } from 'react-redux';
-import { setIsloggedin, setLogintoken } from '../../store/Slice/LoginSlice';
+import { setIsloggedin, setLogintoken,setfirstInstallSplashScreen } from '../../store/Slice/LoginSlice';
 import { AppDispatch, RootState } from '../../store/Store';
 
 import BottomTab from '../BottomNavigation/BottomTab';
@@ -28,7 +28,7 @@ const Stack = createNativeStackNavigator();
 
 function StackNavigation() {
   const dispatch = useDispatch<AppDispatch>();
-  const {isLoggedin, loader} = useSelector(
+  const {isLoggedin, loader,firstInstallSplashScreen} = useSelector(
     (state: RootState) => state.login,
   );
 
@@ -45,13 +45,22 @@ function StackNavigation() {
     tokenStore();
   }, []);
 
+ 
+
+  useLayoutEffect(() => {
+     tokenStore();
+    AsyncStorage.getItem('Spalshscreenshowfirsttime').then(value => {
+      value && dispatch(setfirstInstallSplashScreen(true));
+    });
+  }, []);
+
   return (
     <NavigationContainer>
        {loader && <Loader/>}
       <Stack.Navigator screenOptions={{headerShown: false}}>
         {!isLoggedin ? (
           <>
-            <Stack.Screen name="SplashScreen" component={SplashScreen} />
+           {!firstInstallSplashScreen && (<Stack.Screen name="SplashScreen" component={SplashScreen} />)}
             <Stack.Screen name="Onboarding" component={Onboarding} />
             <Stack.Screen name="Login" component={Login} />
             <Stack.Screen name="Signup" component={Signup} />
@@ -62,7 +71,6 @@ function StackNavigation() {
               name="LoginOtpVerification"
               component={LoginOtpVerification}
             />
-            {/* <Stack.Screen name="Internet" component={Internet} /> */}
           </>
         ) : (
           <>

@@ -7,6 +7,7 @@ interface LoginState {
   isLoggedin:boolean
   accesstoken : string | null
   loader: boolean
+  firstInstallSplashScreen : boolean
 
 }
 
@@ -16,7 +17,8 @@ const initialState: LoginState = {
   loginPassword : "",
   isLoggedin : false,
   accesstoken:null,
-  loader : false
+  loader : false,
+  firstInstallSplashScreen : false
     
 };
 
@@ -43,8 +45,11 @@ const loginSlice = createSlice({
       setIsloading(state,action: PayloadAction<boolean>){
         state.loader = action.payload
       },
+      setfirstInstallSplashScreen(state,action: PayloadAction<boolean>){
+        state.firstInstallSplashScreen =  action.payload
+      }
   },
 });
 
-export const { setLoginPhone, setLoginPassword,setIsloggedin,setLogintoken,clearLoginData,setIsloading } = loginSlice.actions;
+export const { setLoginPhone, setLoginPassword,setIsloggedin,setLogintoken,clearLoginData,setIsloading,setfirstInstallSplashScreen } = loginSlice.actions;
 export default loginSlice.reducer;
