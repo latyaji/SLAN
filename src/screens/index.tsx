@@ -13,6 +13,7 @@ import Settings from "./settings/Settings";
 import BottomTab from "./BottomNavigation/BottomTab";
 import Internet from "./InternetCheck/Internet"
 import ViewAllTournaments from "./tournaments/ViewAllTournaments"
+import DrawerNavigation from "./DrawerNavigation/Drawer"
 
 export {
     Signup,
@@ -29,6 +30,7 @@ export {
     Settings,
     BottomTab,
     Internet,
-    ViewAllTournaments
+    ViewAllTournaments,
+    DrawerNavigation
 
 }

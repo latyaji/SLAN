@@ -91,20 +91,6 @@ const Play = () => {
         </View>
         <CardTittle title={Config.tournaments} onPress={viewall} />
         <Cards carddata={tournamnet} onPress={fetchCardDetails} />
-
-       
-        <TouchableOpacity
-          onPress={logout}
-          style={{
-            backgroundColor: Colors.Orange,
-            justifyContent: 'flex-end',
-            padding: 20,
-            alignItems: 'center',
-            marginTop: 20,
-          }}>
-          <Text style={globalStyles.regulareTxt}>Testing Logout</Text>
-        </TouchableOpacity>
-
         
       </ScrollView>
     </View>

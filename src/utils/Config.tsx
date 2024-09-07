@@ -45,7 +45,19 @@ export const Config = {
    otp:"OTP",
    passcode:"Passcode",
    close: "Close",
-  entercorrectmobile: "*Enter registered mobile number ! "
+  entercorrectmobile: "*Enter registered mobile number ! ",
+  myprofile : "My Profile",
+  sportskilllevel:"Sports Skill Level",
+  mypreferences:"My Preferences",
+  contactus : "Contact Us",
+  about:"About",
+  mypayments:"My Payments",
+  setpasscode:"Set Passcode",
+  notifications:"Notifications",
+  logout:"Log Out"
+
+
+
 
 
     

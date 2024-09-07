@@ -2,7 +2,7 @@ import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {Image, StyleSheet} from 'react-native';
 import {PlayIcon, SettingsIcon, TrackIcon} from '../../utils/assets';
-import {Play, Track, Settings} from '../index';
+import {Play, Track, Settings, DrawerNavigation} from '../index';
 import {Config} from '../../utils/Config';
 
 const Tab = createBottomTabNavigator();
@@ -42,7 +42,7 @@ function BottomTab() {
       })}>
       <Tab.Screen name="Play" component={Play} />
       <Tab.Screen name="Track" component={Track} />
-      <Tab.Screen name="Settings" component={Settings} />
+      <Tab.Screen name="Settings" component={DrawerNavigation} />
     </Tab.Navigator>
   );
 }

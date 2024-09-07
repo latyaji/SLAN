@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React, { useEffect, useLayoutEffect } from 'react';
 
 import {
+  DrawerNavigation,
   Forgot,
   Internet,
   Login,
@@ -75,6 +76,7 @@ function StackNavigation() {
         ) : (
           <>
             <Stack.Screen name="BottomTab" component={BottomTab} />
+            <Stack.Screen name="DrawerNavigation" component={DrawerNavigation} />
             <Stack.Screen
               name="ViewAllTournaments"
               component={ViewAllTournaments}
