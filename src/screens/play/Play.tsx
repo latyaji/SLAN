@@ -13,7 +13,7 @@ import {
 import { useDispatch } from 'react-redux';
 import { Cards, CardTittle } from '../../component';
 import Header from '../../component/Header';
-import { clearLoginData } from '../../store/Slice/LoginSlice';
+import { clearLoginData, setIsloading } from '../../store/Slice/LoginSlice';
 import { Banner } from '../../utils/assets';
 import { Colors } from '../../utils/Colors';
 import { Config } from '../../utils/Config';
@@ -40,16 +40,20 @@ const Play = () => {
   }, []);
 
   const tournamnetApiCall = async () => {
+    setIsloading(true)
     axios
       .post(
         'https://dev-slansports.azurewebsites.net/Public/viewData/5/Home_Tournaments',
       )
       .then(response => {
+        setIsloading(false)
+
         if (response.data) {
           setTournamnet(response.data.data.root.rowData_list);
         }
       })
       .catch(error => {
+        setIsloading(false)
         console.log('Error message: ', error.message);
       });
   };
@@ -73,8 +77,9 @@ const Play = () => {
     navigation.navigate("ViewAllTournaments")
   }
 
-  const fetchCardDetails = () =>{
-    Alert.alert("coming soon")
+  const fetchCardDetails = (id : string) =>{
+    // console.log("seeeee card id-------",id)
+    navigation.navigate("Esporttournamnet",{ tournamentId: id })
   }
 
   return (

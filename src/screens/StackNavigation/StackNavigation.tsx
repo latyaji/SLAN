@@ -4,6 +4,7 @@ import React, { useEffect, useLayoutEffect } from 'react';
 
 import {
   DrawerNavigation,
+  Esporttournamnet,
   Forgot,
   Internet,
   Login,
@@ -80,6 +81,10 @@ function StackNavigation() {
             <Stack.Screen
               name="ViewAllTournaments"
               component={ViewAllTournaments}
+            />
+              <Stack.Screen
+              name="Esporttournamnet"
+              component={Esporttournamnet}
             />
           </>
         )}

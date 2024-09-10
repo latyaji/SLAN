@@ -30,6 +30,7 @@ const Login = ({navigation: {goBack}}: any) => {
   const navigation = useNavigation();
   const [selectedValue, setSelectedValue] = useState('option1');
   const [loginMsg, setLoginMsg] = useState({text: '', type: ''});
+  const [selectedradio, setSelectedRadio] = useState(1);
 
   const dispatch = useDispatch<AppDispatch>();
 
@@ -38,7 +39,7 @@ const Login = ({navigation: {goBack}}: any) => {
   );
 
   const loginapi = () => {
-    dispatch(setIsloading(true))
+    dispatch(setIsloading(true));
     axios
       .post(
         'https://dev-slansports.azurewebsites.net/Account/LogOn/primary',
@@ -53,7 +54,7 @@ const Login = ({navigation: {goBack}}: any) => {
         },
       )
       .then(response => {
-        dispatch(setIsloading(false))
+        dispatch(setIsloading(false));
         if (response.data) {
           if (response.data.access_token) {
             AsyncStorage.setItem('TOKEN', response.data.access_token);
@@ -64,7 +65,7 @@ const Login = ({navigation: {goBack}}: any) => {
         }
       })
       .catch(error => {
-        dispatch(setIsloading(false))
+        dispatch(setIsloading(false));
         setLoginMsg({text: 'Incorrect User Name (or) Passcode', type: 'error'});
         console.log('Error message: ', error.message);
       });
@@ -111,8 +112,8 @@ const Login = ({navigation: {goBack}}: any) => {
           mobilno={'+91-'}
         />
         {/* {loginMsg.type !== 'success' && <Text style={globalStyles.errormsg}>{Config.entercorrectmobile}</Text> } */}
-        
-        <View style={styles.radioGroup}>
+
+        {/* <View style={styles.radioGroup}>
           <View style={styles.radioButton}>
             <RadioButton.Android
               value="option1"
@@ -132,7 +133,30 @@ const Login = ({navigation: {goBack}}: any) => {
             />
             <Text style={styles.radioLabel}>{Config.otp}</Text>
           </View>
+        </View> */}
+        <View style={{flexDirection:"row",marginTop:vh(20),marginBottom:vh(20)}}>
+          <View style={globalStyles.btncontainer}>
+            <TouchableOpacity
+              onPress={() => setSelectedRadio(1)}
+              style={globalStyles.btnbox}>
+              {selectedradio == 1 ? (
+                <View style={globalStyles.btnboxbg}></View>
+              ) : null}
+            </TouchableOpacity>
+            <Text style={globalStyles.radiotxt}>{Config.passcode}</Text>
+          </View>
+          <View style={[globalStyles.btncontainer,{marginLeft:s(40)}]}>
+            <TouchableOpacity
+              onPress={() => setSelectedRadio(2)}
+              style={globalStyles.btnbox}>
+              {selectedradio == 2 ? (
+                <View style={globalStyles.btnboxbg}></View>
+              ) : null}
+            </TouchableOpacity>
+            <Text style={globalStyles.radiotxt}>{Config.otp}</Text>
+          </View>
         </View>
+
         <TextField
           placeholder={Config.enterpasscode}
           source={lockIcon}
@@ -166,14 +190,10 @@ const Login = ({navigation: {goBack}}: any) => {
               flexDirection: 'row',
               alignItems: 'center',
               justifyContent: 'center',
-              marginTop:vh(16)
+              marginTop: vh(16),
             }}>
             {loginMsg.type !== 'success' && (
-              <Icon
-                name="warning"
-                size={22}
-                color={'#FFCE31'}
-              />
+              <Icon name="warning" size={22} color={'#FFCE31'} />
             )}
             <Text
               style={

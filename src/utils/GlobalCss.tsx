@@ -149,4 +149,45 @@ export const globalStyles = StyleSheet.create({
     color: Colors.red,
     marginTop: vh(3),
   },
+  cardtittletxt:{
+    fontFamily: Config.bold,
+      fontSize: s(16),
+      color: Colors.black,
+      width: s(280),
+  },
+  btncontainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  btnbox: {
+    width: 20,
+    height: 20,
+    borderWidth: 2,
+    borderColor: Colors.Orange,
+    borderRadius: 20,
+  },
+  btnboxbg: {
+    width: 10,
+    height: 10,
+    backgroundColor: Colors.Orange,
+    borderRadius: 20,
+    margin: 3,
+  },
+  radiotxt: {
+    marginLeft: 10,
+    fontFamily:Config.regular,
+    fontSize:s(14),
+    color:Colors.black
+  },
+  selectEventTxt: {
+    fontFamily: Config.bold,
+    fontSize: s(14),
+    color: Colors.black,
+    width: s(280),
+  },
+  radionmainconatiner: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 12,
+  }
 });

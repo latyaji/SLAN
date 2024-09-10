@@ -54,7 +54,11 @@ export const Config = {
   mypayments:"My Payments",
   setpasscode:"Set Passcode",
   notifications:"Notifications",
-  logout:"Log Out"
+  logout:"Log Out",
+  esporttouranament: "E-Sport Touranament",
+  rulesregulations:"Rules and Regulations",
+ alsolike :  "You may also like:",
+selectevent: "Select Events to Register"
 
 
 

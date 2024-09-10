@@ -70,12 +70,7 @@ const ViewAllTournaments = ({navigation: {goBack}}:any) => {
             </View>
             <View style={{marginLeft: s(12)}}>
               <Text
-                style={{
-                  fontFamily: Config.bold,
-                  fontSize: s(16),
-                  color: Colors.black,
-                  width: s(280),
-                }}>
+                style={globalStyles.cardtittletxt}>
                 {item.Tournament_Name}
               </Text>
 

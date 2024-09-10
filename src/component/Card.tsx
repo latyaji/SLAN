@@ -8,7 +8,7 @@ import {noImage} from '../utils/assets';
 
 interface cardsProps {
   carddata: any;
-  onPress:() => void
+  onPress:(id:string) => void
 }
 
 const Cards = ({carddata,onPress}: cardsProps) => {
@@ -20,7 +20,7 @@ const Cards = ({carddata,onPress}: cardsProps) => {
       contentContainerStyle={globalStyles.listContainer}
       renderItem={({item}) => (
         <TouchableOpacity 
-         onPress={onPress}
+         onPress={()=>onPress(item.tournamentId)}
          style={globalStyles.cardContainer}>
           <View style={globalStyles.imgCard}>
             <Image
