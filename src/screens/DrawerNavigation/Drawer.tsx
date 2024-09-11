@@ -21,7 +21,7 @@ function Myprofile() {
 }
 
 
-function CustomDrawerContent(props) {
+function CustomDrawerContent() {
   const dispatch = useDispatch();
 
   const logout = async () => {
@@ -31,7 +31,7 @@ function CustomDrawerContent(props) {
       console.log('exception====>>>', exception);
     }
     dispatch(clearLoginData());
-    props.navigation.navigate('Login'); 
+    // props.navigation.navigate('Login'); 
   };
 
   return (

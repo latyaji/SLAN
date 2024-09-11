@@ -20,6 +20,7 @@ import {globalStyles} from '../../utils/GlobalCss';
 import {useDispatch} from 'react-redux';
 import {setIsloading} from '../../store/Slice/LoginSlice';
 import HTMLView from 'react-native-htmlview';
+import DropdownEvent from '../../component/DropdownEvent';
 
 const Esporttournamnet = ({props, navigation}: any) => {
   const dispatch = useDispatch();
@@ -34,10 +35,28 @@ const Esporttournamnet = ({props, navigation}: any) => {
   const [terms, setterms] = useState('');
   const [termdrop, settermdrop] = useState(false);
   const [selectedradio, setSelectedRadio] = useState(1);
+  const [events, setEvents] = useState([]);
+  const [sports, setsports] = useState([]);
+
+  const [dropdownVisibility, setDropdownVisibility] = useState({
+    singles: false,
+    doubles: false,
+    Squash: false,
+    Badminton: false,
+    TableTennis: false
+
+  });
 
   const route = useRoute<RouteProp<RootStackParamList, 'Esporttournamnet'>>();
   const {tournamentId} = route.params;
   const TEXT_LIMIT = 210;
+
+  const toggleDropdown = (type: string) => {
+    setDropdownVisibility(prevState => ({
+      ...prevState,
+      [type]: !prevState[type], // Toggle the visibility for singles or doubles
+    }));
+  };
 
   const sportdata = async () => {
     dispatch(setIsloading(true));
@@ -84,9 +103,9 @@ const Esporttournamnet = ({props, navigation}: any) => {
         dispatch(setIsloading(false));
         if (response.data) {
           setterms(
-            JSON.stringify(
+            // JSON.stringify(
               response.data.data.root.rowData_list[0].TD_Otherrules,
-            ),
+            
           );
         }
       })
@@ -96,6 +115,108 @@ const Esporttournamnet = ({props, navigation}: any) => {
       });
   };
 
+  const eventApi = async () => {
+    dispatch(setIsloading(true));
+    axios
+      .post(
+        'https://dev-slansports.azurewebsites.net/Public/viewData/19/Tournaments_GroupBy',
+        {
+          dataContext: [],
+          pageContext: [
+            {
+              SportsDetails: 2,
+              tournamentid: '197',
+              geographyId: '31',
+            },
+          ],
+          infinite: {
+            limit: 10,
+            offset: 0,
+            infiniteScrollFlag: false,
+          },
+          geolocation: {
+            lat: 13.6531302,
+            lon: 79.4378633,
+          },
+          serialNumber: '0db0edf30cd01110',
+          type: 'Android',
+          appContext: {
+            role: '0',
+            profile: {
+              FirstName: 'Subbu SP',
+              imageUrl:
+                'http://www.stg.slansports.com/assets/images/san/default.png',
+              editUrl:
+                'http://www.stg.slansports.com/assets/images/san/edit-profile.png',
+              share: ['WhatsApp', 'Facebook', 'Instagram', 'Twitter'],
+            },
+          },
+          version: 'M201810251014',
+        },
+      )
+      .then(response => {
+        dispatch(setIsloading(false));
+        if (response.data) {
+          setEvents(response.data.data.root.rowData_list);
+        }
+      })
+      .catch(error => {
+        dispatch(setIsloading(false));
+        console.log('Error message: ', error.message);
+      });
+  };
+
+  const sportsApi = async () => {
+    dispatch(setIsloading(true));
+    axios
+      .post(
+        'https://dev-slansports.azurewebsites.net/Public/viewData/19/Tournaments_GroupBy',
+        {
+          dataContext: [],
+          pageContext: [
+            {
+              SportsDetails: 1,
+              tournamentid: '197',
+              geographyId: '31',
+            },
+          ],
+          infinite: {
+            limit: 10,
+            offset: 0,
+            infiniteScrollFlag: false,
+          },
+          geolocation: {
+            lat: 13.6531302,
+            lon: 79.4378633,
+          },
+          serialNumber: '0db0edf30cd01110',
+          type: 'Android',
+          appContext: {
+            role: '0',
+            profile: {
+              FirstName: 'Subbu SP',
+              imageUrl:
+                'http://www.stg.slansports.com/assets/images/san/default.png',
+              editUrl:
+                'http://www.stg.slansports.com/assets/images/san/edit-profile.png',
+              share: ['WhatsApp', 'Facebook', 'Instagram', 'Twitter'],
+            },
+          },
+          version: 'M201810251014',
+        },
+      )
+      .then(response => {
+        dispatch(setIsloading(false));
+        if (response.data) {
+          setsports(response.data.data.root.rowData_list)
+         console.log("sports daaatatta---------",response.data.data.root.rowData_list)
+        }
+      })
+      .catch(error => {
+        dispatch(setIsloading(false));
+        console.log('Error message: ', error.message);
+      });
+  };
   const toggleExpand = () => {
     setIsExpanded(!isExpanded);
   };
@@ -105,6 +226,8 @@ const Esporttournamnet = ({props, navigation}: any) => {
   };
 
   useEffect(() => {
+   eventApi()
+   sportsApi()
     sportdata();
     rulesandregulations();
   }, []);
@@ -114,56 +237,75 @@ const Esporttournamnet = ({props, navigation}: any) => {
   };
 
   const handleEvents = () => {
+    const singles: any[] = [];
+    const doubles: any[] = [];
+
+    events.forEach((item: {GroupngColumn: string}) => {
+      if (item.GroupngColumn === 'Singles') {
+        singles.push(item);
+      } else if (item.GroupngColumn === 'Doubles') {
+        doubles.push(item);
+      }
+    });
     return (
       <View>
-        <View style={styles.eventsBorderBox}>
-          <Text
-            style={[globalStyles.selectEventTxt, {color: Colors.lightOrange}]}>
-            Singles
-          </Text>
-          <TouchableOpacity>
-          <Image source={dropdown} />
-          </TouchableOpacity>
-         
-        </View>
-        <View style={styles.eventsBorderBox}>
-          <Text
-            style={[globalStyles.selectEventTxt, {color: Colors.lightOrange}]}>
-            Doubles
-          </Text>
-          <TouchableOpacity>
-          <Image source={dropdown} />
-          </TouchableOpacity>
-        </View>
-        <View style={styles.eventsBorderBox}>
-          <Text
-            style={[globalStyles.selectEventTxt, {color: Colors.lightOrange}]}>
-            Teams
-          </Text>
-          <TouchableOpacity>
-          <Image source={dropdown} />
-          </TouchableOpacity>
-        </View>
+        <DropdownEvent
+          tittle="Single"
+          isVisibility={dropdownVisibility.singles}
+          toggleVisibility={() => toggleDropdown('singles')}
+          data={singles}
+        />
+
+        <DropdownEvent
+          tittle="Doubles"
+          isVisibility={dropdownVisibility.doubles}
+          toggleVisibility={() => toggleDropdown('doubles')}
+          data={doubles}
+        />
       </View>
     );
   };
 
+
   const handleSports = () => {
+    const Squash: any[] = [];
+    const Badminton: any[] = [];
+    const TableTennis: any[] = [];
+
+    sports.forEach((item: {GroupngColumn: string}) => {
+      if (item.GroupngColumn === 'Squash') {
+        Squash.push(item);
+      } else if (item.GroupngColumn === 'Badminton') {
+        Badminton.push(item);
+      }else if (item.GroupngColumn === 'Table Tennis') {
+        TableTennis.push(item);
+      }
+    });
     return (
       <View>
-        <View style={styles.eventsBorderBox}>
-          <Text
-            style={[globalStyles.selectEventTxt, {color: Colors.lightOrange}]}>
-            Sports
-          </Text>
-          <TouchableOpacity>
-          <Image source={dropdown} />
-          </TouchableOpacity>
-        </View>
-       
+        <DropdownEvent
+          tittle="Squash"
+          isVisibility={dropdownVisibility.Squash}
+          toggleVisibility={() => toggleDropdown('Squash')}
+          data={Squash}
+        />
+
+        <DropdownEvent
+          tittle="Badminton"
+          isVisibility={dropdownVisibility.Badminton}
+          toggleVisibility={() => toggleDropdown('Badminton')}
+          data={Badminton}
+        />
+        <DropdownEvent
+          tittle="Table Tennis"
+          isVisibility={dropdownVisibility.TableTennis}
+          toggleVisibility={() => toggleDropdown('TableTennis')}
+          data={TableTennis}
+        />
       </View>
     );
   };
+
   const handleMonth = () => {
     return (
       <View>
@@ -173,10 +315,9 @@ const Esporttournamnet = ({props, navigation}: any) => {
             Month
           </Text>
           <TouchableOpacity>
-          <Image source={dropdown} />
+            <Image source={dropdown} />
           </TouchableOpacity>
         </View>
-       
       </View>
     );
   };
@@ -191,8 +332,7 @@ const Esporttournamnet = ({props, navigation}: any) => {
       />
       <ScrollView
         style={{margin: s(12)}}
-        automaticallyAdjustContentInsets={true}
-      >
+        automaticallyAdjustContentInsets={true}>
         <Image
           source={{uri: esportdata.Tournament_Image}}
           style={{width: s(325), height: vs(200), borderRadius: s(10)}}
@@ -255,8 +395,7 @@ const Esporttournamnet = ({props, navigation}: any) => {
             borderRadius: 10,
           }}>
           <Text style={globalStyles.selectEventTxt}>{Config.selectevent}</Text>
-          <View
-            style={globalStyles.radionmainconatiner}>
+          <View style={globalStyles.radionmainconatiner}>
             <View style={globalStyles.btncontainer}>
               <TouchableOpacity
                 onPress={() => setSelectedRadio(1)}
@@ -291,10 +430,10 @@ const Esporttournamnet = ({props, navigation}: any) => {
           </View>
         </View>
 
-       {selectedradio == 1 && handleEvents()}
-       {selectedradio == 2 && handleSports()}
-       {selectedradio == 3 && handleMonth()}
-       
+        {selectedradio == 1 && handleEvents()}
+        {selectedradio == 2 && handleSports()}
+        {selectedradio == 3 && handleMonth()}
+
         <View style={styles.rulesConatiner}>
           <Text style={globalStyles.cardtittletxt}>
             {Config.rulesregulations}
@@ -312,13 +451,19 @@ const Esporttournamnet = ({props, navigation}: any) => {
         <Text style={[globalStyles.cardtittletxt, {marginTop: vs(12)}]}>
           {Config.alsolike}
         </Text>
-      <Button tittle='Register'/>
+        <Button tittle="Register" />
       </ScrollView>
     </View>
   );
 };
 
 export default Esporttournamnet;
+
+
+
+
+
+
 
 const styles = StyleSheet.create({
   readMoreText: {
@@ -351,5 +496,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 10,
     borderColor: Colors.bordergrey,
+  },
+  eventItem: {
+    padding: 10,
+    borderBottomWidth: 1,
+    borderColor: Colors.bordergrey,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
 });
