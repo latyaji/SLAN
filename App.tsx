@@ -20,14 +20,13 @@ function App() {
         barStyle="dark-content"
       />
       <PaperProvider>
-        {/* <View style={{flex:1}}>
+        <View style={{flex:1}}>
           {netInfo.isInternetReachable ? (
             <StackNavigation/>
           ) : (
             <Internet/>
           )}
-        </View> */}
-          <StackNavigation/>
+        </View>
       </PaperProvider>
     </Provider>
   );

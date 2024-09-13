@@ -163,7 +163,8 @@ export const globalStyles = StyleSheet.create({
     width: 20,
     height: 20,
     borderWidth: 2,
-    borderColor: Colors.Orange,
+    // borderColor: Colors.Orange,
+    borderColor: Colors.grey,
     borderRadius: 20,
   },
   btnboxbg: {
@@ -189,5 +190,7 @@ export const globalStyles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginTop: 12,
-  }
+  },
+  smallLightOrangetxt:{color: Colors.lightOrange,fontSize:s(11.5),fontFamily:Config.regular}
+
 });

@@ -22,7 +22,7 @@ import {setIsloading} from '../../store/Slice/LoginSlice';
 import HTMLView from 'react-native-htmlview';
 import DropdownEvent from '../../component/DropdownEvent';
 
-const Esporttournamnet = ({props, navigation}: any) => {
+const Esporttournamnet = ({navigation}: any) => {
   const dispatch = useDispatch();
   const [esportdata, setesportdata] = useState({
     Tournament_VenueName: '',
@@ -43,8 +43,7 @@ const Esporttournamnet = ({props, navigation}: any) => {
     doubles: false,
     Squash: false,
     Badminton: false,
-    TableTennis: false
-
+    TableTennis: false,
   });
 
   const route = useRoute<RouteProp<RootStackParamList, 'Esporttournamnet'>>();
@@ -54,7 +53,7 @@ const Esporttournamnet = ({props, navigation}: any) => {
   const toggleDropdown = (type: string) => {
     setDropdownVisibility(prevState => ({
       ...prevState,
-      [type]: !prevState[type], // Toggle the visibility for singles or doubles
+      [type]: !prevState[type],
     }));
   };
 
@@ -104,8 +103,7 @@ const Esporttournamnet = ({props, navigation}: any) => {
         if (response.data) {
           setterms(
             // JSON.stringify(
-              response.data.data.root.rowData_list[0].TD_Otherrules,
-            
+            response.data.data.root.rowData_list[0].TD_Otherrules,
           );
         }
       })
@@ -208,8 +206,11 @@ const Esporttournamnet = ({props, navigation}: any) => {
       .then(response => {
         dispatch(setIsloading(false));
         if (response.data) {
-          setsports(response.data.data.root.rowData_list)
-         console.log("sports daaatatta---------",response.data.data.root.rowData_list)
+          setsports(response.data.data.root.rowData_list);
+          console.log(
+            'sports daaatatta---------',
+            response.data.data.root.rowData_list,
+          );
         }
       })
       .catch(error => {
@@ -226,8 +227,8 @@ const Esporttournamnet = ({props, navigation}: any) => {
   };
 
   useEffect(() => {
-   eventApi()
-   sportsApi()
+    eventApi();
+    sportsApi();
     sportdata();
     rulesandregulations();
   }, []);
@@ -266,7 +267,6 @@ const Esporttournamnet = ({props, navigation}: any) => {
     );
   };
 
-
   const handleSports = () => {
     const Squash: any[] = [];
     const Badminton: any[] = [];
@@ -277,7 +277,7 @@ const Esporttournamnet = ({props, navigation}: any) => {
         Squash.push(item);
       } else if (item.GroupngColumn === 'Badminton') {
         Badminton.push(item);
-      }else if (item.GroupngColumn === 'Table Tennis') {
+      } else if (item.GroupngColumn === 'Table Tennis') {
         TableTennis.push(item);
       }
     });
@@ -342,9 +342,10 @@ const Esporttournamnet = ({props, navigation}: any) => {
           {esportdata.Tournament_Name}
         </Text>
 
-        <View style={{flexDirection: 'row', marginTop: vs(12)}}>
+        <View
+          style={{flexDirection: 'row', marginTop: vs(12), marginLeft: s(2)}}>
           <Image source={calender} />
-          <Text style={{marginLeft: 17, color: Colors.lightOrange}}>
+          <Text style={[globalStyles.smallLightOrangetxt, {marginLeft: 9}]}>
             {esportdata.Tournament_StartDate}
           </Text>
         </View>
@@ -381,7 +382,7 @@ const Esporttournamnet = ({props, navigation}: any) => {
         </Text>
         {esportdata.About.length > TEXT_LIMIT && (
           <TouchableOpacity onPress={toggleExpand}>
-            <Text style={styles.readMoreText}>
+            <Text style={globalStyles.smallLightOrangetxt}>
               {isExpanded ? 'Read Less' : 'Read More'}
             </Text>
           </TouchableOpacity>
@@ -399,7 +400,7 @@ const Esporttournamnet = ({props, navigation}: any) => {
             <View style={globalStyles.btncontainer}>
               <TouchableOpacity
                 onPress={() => setSelectedRadio(1)}
-                style={globalStyles.btnbox}>
+                style={[globalStyles.btnbox,{borderColor: selectedradio == 1 ? Colors.Orange : Colors.bordergrey}]}>
                 {selectedradio == 1 ? (
                   <View style={globalStyles.btnboxbg}></View>
                 ) : null}
@@ -409,7 +410,7 @@ const Esporttournamnet = ({props, navigation}: any) => {
             <View style={globalStyles.btncontainer}>
               <TouchableOpacity
                 onPress={() => setSelectedRadio(2)}
-                style={globalStyles.btnbox}>
+                style={[globalStyles.btnbox,{borderColor: selectedradio == 2 ? Colors.Orange : Colors.bordergrey}]}>
                 {selectedradio == 2 ? (
                   <View style={globalStyles.btnboxbg}></View>
                 ) : null}
@@ -420,7 +421,7 @@ const Esporttournamnet = ({props, navigation}: any) => {
             <View style={globalStyles.btncontainer}>
               <TouchableOpacity
                 onPress={() => setSelectedRadio(3)}
-                style={globalStyles.btnbox}>
+                style={[globalStyles.btnbox,{borderColor: selectedradio == 3 ? Colors.Orange : Colors.bordergrey}]}>
                 {selectedradio == 3 ? (
                   <View style={globalStyles.btnboxbg}></View>
                 ) : null}
@@ -442,15 +443,13 @@ const Esporttournamnet = ({props, navigation}: any) => {
           <TouchableOpacity onPress={() => openTerms()}>
             <Image
               source={dropdown}
-              style={{transform: [{rotate: termdrop ? '270deg' : '360deg'}]}}
+              style={{transform: [{rotate: termdrop ? '360deg' : '270deg'}]}}
             />
           </TouchableOpacity>
         </View>
 
         {termdrop && <HTMLView value={terms} />}
-        <Text style={[globalStyles.cardtittletxt, {marginTop: vs(12)}]}>
-          {Config.alsolike}
-        </Text>
+
         <Button tittle="Register" />
       </ScrollView>
     </View>
@@ -459,18 +458,7 @@ const Esporttournamnet = ({props, navigation}: any) => {
 
 export default Esporttournamnet;
 
-
-
-
-
-
-
 const styles = StyleSheet.create({
-  readMoreText: {
-    color: Colors.Orange,
-    fontSize: s(13),
-    fontFamily: Config.light,
-  },
   html: {
     fontSize: s(16),
     color: '#333',
@@ -487,6 +475,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     borderTopWidth: 1,
     borderColor: Colors.bordergrey,
+    justifyContent: 'space-between',
   },
   eventsBorderBox: {
     flexDirection: 'row',

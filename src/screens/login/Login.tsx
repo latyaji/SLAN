@@ -1,16 +1,13 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
-import React, {useEffect, useState} from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import {RadioButton} from 'react-native-paper';
+import React, { useEffect, useState } from 'react';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import {
   scale as s,
-  verticalScale as vh,
-  moderateScale as ms,
+  verticalScale as vh
 } from 'react-native-size-matters';
-import Icon from 'react-native-vector-icons/Ionicons';
-import {useDispatch, useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Button from '../../component/Button';
 import Header from '../../component/Header';
 import TextField from '../../component/TextField';
@@ -20,11 +17,11 @@ import {
   setLoginPassword,
   setLoginPhone,
 } from '../../store/Slice/LoginSlice';
-import {AppDispatch, RootState} from '../../store/Store';
-import {lockIcon, phoneIcon} from '../../utils/assets';
-import {Colors} from '../../utils/Colors';
-import {Config} from '../../utils/Config';
-import {globalStyles} from '../../utils/GlobalCss';
+import { AppDispatch, RootState } from '../../store/Store';
+import { lockIcon, phoneIcon, warning } from '../../utils/assets';
+import { Colors } from '../../utils/Colors';
+import { Config } from '../../utils/Config';
+import { globalStyles } from '../../utils/GlobalCss';
 
 const Login = ({navigation: {goBack}}: any) => {
   const navigation = useNavigation();
@@ -138,7 +135,7 @@ const Login = ({navigation: {goBack}}: any) => {
           <View style={globalStyles.btncontainer}>
             <TouchableOpacity
               onPress={() => setSelectedRadio(1)}
-              style={globalStyles.btnbox}>
+              style={[globalStyles.btnbox,{borderColor: selectedradio == 1 ? Colors.Orange : Colors.bordergrey}]}>
               {selectedradio == 1 ? (
                 <View style={globalStyles.btnboxbg}></View>
               ) : null}
@@ -148,7 +145,7 @@ const Login = ({navigation: {goBack}}: any) => {
           <View style={[globalStyles.btncontainer,{marginLeft:s(40)}]}>
             <TouchableOpacity
               onPress={() => setSelectedRadio(2)}
-              style={globalStyles.btnbox}>
+              style={[globalStyles.btnbox,{borderColor: selectedradio == 2 ? Colors.Orange : Colors.bordergrey}]}>
               {selectedradio == 2 ? (
                 <View style={globalStyles.btnboxbg}></View>
               ) : null}
@@ -192,8 +189,10 @@ const Login = ({navigation: {goBack}}: any) => {
               justifyContent: 'center',
               marginTop: vh(16),
             }}>
+              
             {loginMsg.type !== 'success' && (
-              <Icon name="warning" size={22} color={'#FFCE31'} />
+              <Image source={warning}/>
+             // <Icon name="warning" size={22} color={'#FFCE31'} />
             )}
             <Text
               style={

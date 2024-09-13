@@ -61,17 +61,27 @@ export const Config = {
   rulesregulations:"Rules and Regulations",
  alsolike :  "You may also like:",
 selectevent: "Select Events to Register"
-
-
-
-
-
-    
-    
-    
-    
-
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // About Tournament Group By Eevnts
 
