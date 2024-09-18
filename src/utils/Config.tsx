@@ -60,7 +60,14 @@ export const Config = {
   esporttouranament: "E-Sport Touranament",
   rulesregulations:"Rules and Regulations",
  alsolike :  "You may also like:",
-selectevent: "Select Events to Register"
+selectevent: "Select Events to Register",
+selectparticipants : "Select Participants ",
+addparticipants  : "Add Participants  ",
+male : "Male",
+female : "Female",
+DOB : "Date of Birth",
+idproff : "ID Proof"
+
 }
 
 

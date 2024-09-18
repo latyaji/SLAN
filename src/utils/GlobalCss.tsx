@@ -6,6 +6,7 @@ import {
   scale as s,
   verticalScale as vh,
   moderateScale as ms,
+  vs,
 } from 'react-native-size-matters';
 
 export const globalStyles = StyleSheet.create({
@@ -191,6 +192,23 @@ export const globalStyles = StyleSheet.create({
     justifyContent: 'space-between',
     marginTop: 12,
   },
-  smallLightOrangetxt:{color: Colors.lightOrange,fontSize:s(11.5),fontFamily:Config.regular}
+  smallLightOrangetxt:{color: Colors.lightOrange,fontSize:s(11.5),fontFamily:Config.regular},
+  eventsBorderBox: {
+    flexDirection: 'row',
+    marginTop: vs(12),
+    borderWidth: 1,
+    alignContent: 'center',
+    alignItems: 'center',
+    padding: 10,
+    borderColor: Colors.bordergrey
+  },
+  eventsListseparator:{
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: vs(12),
+    borderBottomWidth: 1,
+    padding: s(3),
+    borderColor: Colors.bordergrey,
+  }
 
 });

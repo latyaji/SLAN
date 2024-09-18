@@ -1,11 +1,16 @@
 import { useNetInfo } from '@react-native-community/netinfo';
 import React from 'react';
-import { StatusBar, View } from 'react-native';
+import { LogBox, StatusBar, View } from 'react-native';
 import { PaperProvider } from 'react-native-paper';
 import { Provider } from 'react-redux';
 import { Internet } from './src/screens';
 import StackNavigation from './src/screens/StackNavigation/StackNavigation';
 import { store } from './src/store/Store';
+
+
+LogBox.ignoreAllLogs();
+
+
 
 function App() {
   const netInfo = useNetInfo();
@@ -33,3 +38,10 @@ function App() {
 }
 
 export default App;
+
+
+
+
+
+
+

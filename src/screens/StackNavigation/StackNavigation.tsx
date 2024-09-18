@@ -3,13 +3,14 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React, { useEffect, useLayoutEffect } from 'react';
 
 import {
+  AddParticipant,
   DrawerNavigation,
   Esporttournamnet,
   Forgot,
-  Internet,
   Login,
   Onboarding,
   OtpVerfication,
+  SelectParticipants,
   Signup,
   SplashScreen,
   ViewAllTournaments
@@ -23,7 +24,6 @@ import { setIsloggedin, setLogintoken,setfirstInstallSplashScreen } from '../../
 import { AppDispatch, RootState } from '../../store/Store';
 
 import BottomTab from '../BottomNavigation/BottomTab';
-import { ActivityIndicator, StatusBar } from 'react-native';
 import Loader from '../../component/Loader';
 
 const Stack = createNativeStackNavigator();
@@ -85,6 +85,14 @@ function StackNavigation() {
               <Stack.Screen
               name="Esporttournamnet"
               component={Esporttournamnet}
+            />
+              <Stack.Screen
+              name="SelectParticipants"
+              component={SelectParticipants}
+            />
+              <Stack.Screen
+              name="AddParticipant"
+              component={AddParticipant}
             />
           </>
         )}

@@ -8,13 +8,15 @@ import Home from "./homedashboard/Home";
 import LoginWithOtp from './login/LoginWithOtp'
 import LoginOtpVerification from './login/LoginOtpVerification'
 import Track from "./track/Track";
-import Play from "./play/Play";
 import Settings from "./settings/Settings";
 import BottomTab from "./BottomNavigation/BottomTab";
 import Internet from "./InternetCheck/Internet"
 import ViewAllTournaments from "./tournaments/ViewAllTournaments"
 import DrawerNavigation from "./DrawerNavigation/Drawer"
+import Play from "./play/Play";
 import Esporttournamnet from "./play/Esporttournamnet";
+import SelectParticipants from "./play/SelectParticipants";
+import AddParticipant from "./play/AddParticipant";
 
 export {
     Signup,
@@ -33,6 +35,7 @@ export {
     Internet,
     ViewAllTournaments,
     DrawerNavigation,
-    Esporttournamnet
-
+    Esporttournamnet,
+    SelectParticipants,
+    AddParticipant
 }

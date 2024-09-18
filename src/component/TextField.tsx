@@ -31,7 +31,7 @@ const TextField = ({ placeholder, source, keyboardType, value, onChangeTxt,secur
     <View style={styles.textInputContainer}>
       <Image 
        source={source} 
-       style={styles.textIcon} />
+       style={globalStyles.textIcon} />
        <Text style={{color:Colors.black,fontSize:s(16),fontFamily:Config.medium}}>{mobilno}</Text>
       <TextInput
         placeholder={placeholder}
@@ -59,10 +59,5 @@ const styles = StyleSheet.create({
     width: '100%',
     height:vh(57)
   },
-  textIcon: {
-    marginRight: s(12),
-    width: s(22),
-    height: vh(16),
-    resizeMode: 'contain',
-  },
+ 
 });
