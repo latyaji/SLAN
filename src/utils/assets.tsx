@@ -10,6 +10,7 @@ export const card = require("../utils/assets/TournamentImg.png")
 export const noImage = require("../utils/assets/noImg.png")
 export const logo = require("../utils/assets/logo.png")
 export const warning = require("../utils/assets/waringemoji.png")
+export const uploaddoc = require("../utils/assets/UploadDoc.png")
 
 
 

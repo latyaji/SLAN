@@ -4,6 +4,8 @@ import React, { useEffect, useLayoutEffect } from 'react';
 
 import {
   AddParticipant,
+  AddPartner,
+  AddTeam,
   DrawerNavigation,
   Esporttournamnet,
   Forgot,
@@ -93,6 +95,14 @@ function StackNavigation() {
               <Stack.Screen
               name="AddParticipant"
               component={AddParticipant}
+            />
+              <Stack.Screen
+              name="AddTeam"
+              component={AddTeam}
+            />
+              <Stack.Screen
+              name="AddPartner"
+              component={AddPartner}
             />
           </>
         )}

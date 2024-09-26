@@ -66,7 +66,12 @@ addparticipants  : "Add Participants  ",
 male : "Male",
 female : "Female",
 DOB : "Date of Birth ",
-idproff : "ID Proof"
+idproff : "ID Proof",
+add : "Add",
+addteam:"Add Team",
+addpartner:"Add Partner"
+
+
 
 }
 

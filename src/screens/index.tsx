@@ -17,6 +17,8 @@ import Play from "./play/Play";
 import Esporttournamnet from "./play/Esporttournamnet";
 import SelectParticipants from "./play/SelectParticipants";
 import AddParticipant from "./play/AddParticipant";
+import AddTeam from "./play/AddTeam";
+import AddPartner from "./play/AddPartner";
 
 export {
     Signup,
@@ -37,5 +39,7 @@ export {
     DrawerNavigation,
     Esporttournamnet,
     SelectParticipants,
-    AddParticipant
+    AddParticipant,
+    AddTeam,
+    AddPartner
 }

@@ -8,7 +8,7 @@ import {
   TextInput,
 } from 'react-native';
 import {Config} from '../../utils/Config';
-import {Header, TextField} from '../../component';
+import {Header, TextField, Button} from '../../component';
 import {useNavigation} from '@react-navigation/native';
 import {s, vs} from 'react-native-size-matters';
 import {Colors} from '../../utils/Colors';
@@ -17,18 +17,21 @@ import {
   calender,
   dropdown,
   dropdownIcon,
+  uploaddoc,
   userIcon,
 } from '../../utils/assets';
 import {globalStyles} from '../../utils/GlobalCss';
 import CalendarPicker from 'react-native-calendar-picker';
 import moment from 'moment';
+import DocumentPicker from 'react-native-document-picker';
 
 const AddParticipant = () => {
   const [selectedradio, setSelectedRadio] = useState(1);
   const [selectedStartDate, setSelectedStartDate] = useState(null);
   const [isCalendarVisible, setIsCalendarVisible] = useState(false);
   const [dropdownIcons, setIsDropdown] = useState(false);
-  const [selectIdProof,setselectIdProof] = useState("")
+  const [selectIdProof, setselectIdProof] = useState('');
+  const [file, setFile] = useState(null);
 
   const navigation = useNavigation();
 
@@ -41,6 +44,23 @@ const AddParticipant = () => {
     {tittle: 'Company Id'},
     {tittle: 'Others'},
   ];
+
+  const pickDocument = async () => {
+    try {
+      const res = await DocumentPicker.pick({
+        type: [DocumentPicker.types.allFiles], // You can specify types here
+      });
+      setFile(res[0]); // Access the first file from the array
+    } catch (err) {
+      if (DocumentPicker.isCancel(err)) {
+        console.log('User canceled the picker');
+      } else {
+        console.error('Error picking document: ', err);
+      }
+    }
+  };
+
+  console.log('file----', file);
 
   const onDateChange = date => {
     setSelectedStartDate(date);
@@ -57,14 +77,12 @@ const AddParticipant = () => {
 
   const openDocList = () => {
     setIsDropdown(!dropdownIcons);
-    
   };
 
-  const selectedDoc = (item:any) =>{
-    setselectIdProof(item.tittle)
+  const selectedDoc = (item: any) => {
+    setselectIdProof(item.tittle);
     setIsDropdown(false);
-
-  }
+  };
 
   return (
     <View>
@@ -128,8 +146,7 @@ const AddParticipant = () => {
             width: '100%',
             justifyContent: 'space-between',
           }}>
-          <View
-            style={globalStyles.calenderConatiner}>
+          <View style={globalStyles.calenderConatiner}>
             <TouchableOpacity onPress={() => openCalendar()}>
               <Image
                 source={calender}
@@ -145,8 +162,7 @@ const AddParticipant = () => {
             />
           </View>
 
-          <View
-            style={globalStyles.calenderConatiner}>
+          <View style={globalStyles.calenderConatiner}>
             <TextInput
               placeholder={Config.idproff}
               placeholderTextColor="#b1b5b2"
@@ -198,8 +214,8 @@ const AddParticipant = () => {
             </View>
             {idProfList.map(item => (
               <TouchableOpacity
-              onPress={()=>selectedDoc(item)}
-                style={{ margin: 2}}>
+                onPress={() => selectedDoc(item)}
+                style={{margin: 2}}>
                 <Text
                   style={[
                     globalStyles.smallTxt,
@@ -211,7 +227,35 @@ const AddParticipant = () => {
             ))}
           </View>
         )}
+
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            marginTop: vs(12),
+          }}>
+          <TouchableOpacity onPress={pickDocument}>
+            <Image source={uploaddoc} />
+          </TouchableOpacity>
+          <Text
+            style={{fontSize: s(13), color: Colors.Orange, paddingLeft: 12}}>
+            Upload ID Proof
+          </Text>
+        </View>
+        <Button
+          tittle="Save"
+          // onPress={handleRegister}
+        />
       </View>
+
+      {/* <View style={{ padding: 20 }}>
+       <Button title="Pick Document" onPress={pickDocument} />
+       {file && (
+        <Text>
+          Selected File: {file.name}
+        </Text>
+      )}
+    </View> */}
     </View>
   );
 };

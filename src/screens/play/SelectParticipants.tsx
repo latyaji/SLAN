@@ -1,32 +1,35 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import {
-  View,
   Image,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
   ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
-import { Config } from '../../utils/Config';
-import { Header } from '../../component';
-import { useNavigation } from '@react-navigation/native';
 import { s, vs } from 'react-native-size-matters';
-import { Colors } from '../../utils/Colors';
-import { add, UnCheckTermsIcon } from '../../utils/assets';
 import { useDispatch } from 'react-redux';
-import apiInstance from '../../utils/apiInstance';
+import { Header } from '../../component';
 import { setIsloading } from '../../store/Slice/LoginSlice';
+import { Colors } from '../../utils/Colors';
+import { Config } from '../../utils/Config';
+import apiInstance from '../../utils/apiInstance';
+import { add, UnCheckTermsIcon } from '../../utils/assets';
 
 const SelectParticipants = ({ route }) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const [playerDataByTournamentId, setPlayerDataByTournamentId] = useState({});
-  const selectedSports = route.params.selectedItems;
+  const [userdependentTypeId , setUserDependentTypeId] = useState("")
+  const selectedSports = route.params?.selectedItems;
 
   const SelectParticipantsApi = async (tournamnetSportsId) => {
     dispatch(setIsloading(true));
 
     try {
+      const getToken = await AsyncStorage.getItem('TOKEN');
       const response = await apiInstance.post(
         'Public/viewData/21/TSD_SportandPlayers',
         {
@@ -36,7 +39,7 @@ const SelectParticipants = ({ route }) => {
         },
         {
           headers: {
-            Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6ImJiMTA5OTcwLWJlZjQtNDAxOS1iNTAwLThmZmFiN2E3ZThkMCIsIm5iZiI6MTcyNzI3ODczNiwiZXhwIjo4MDM4NTg3OTY4LCJpYXQiOjE3MjcyNzg3MzZ9.KeGQ6YDuEEXID6VN0eCNqWwLtComT4Dmvh-qdXWfPyc`,
+            Authorization: `Bearer ${getToken}`,
           },
         }
       );
@@ -53,6 +56,27 @@ const SelectParticipants = ({ route }) => {
     }
   };
 
+  const handleAddPress = (tournamentSportsId) => {
+    const playerData = playerDataByTournamentId[tournamentSportsId];
+
+    if (playerData && playerData.length > 0) {
+      const checkDependentID = playerData[0].DependentTypeId;
+      const ispartner = playerData[0].ispartner;
+      console.log("ispartner=========",ispartner)
+      if(checkDependentID == 1003 || checkDependentID == 11){
+        navigation.navigate("AddParticipant");
+      }
+      else if(checkDependentID == 1004 && ispartner == 1){
+        navigation.navigate("AddPartner");
+      }else if(checkDependentID == 1004 && ispartner == 0){
+        navigation.navigate("AddTeam");
+      }
+      else {
+        console.log('No player data available.');
+      }
+    }
+  };
+  
   useEffect(() => {
     const fetchAllParticipants = async () => {
       dispatch(setIsloading(true));
@@ -90,7 +114,7 @@ const SelectParticipants = ({ route }) => {
           <View key={index} style={styles.cardContainer}>
             <View style={styles.cardHeader}>
               <Text style={styles.cardTxt}>
-                {selectedSports.find(sport => sport.tournamnetSportsId === tournamnetSportsId)?.name}
+                {selectedSports?.find(sport => sport.tournamnetSportsId === tournamnetSportsId)?.name}
               </Text>
               {playerDataByTournamentId[tournamnetSportsId]?.length > 0 && (
                 <Text style={styles.cardTxt}>
@@ -100,10 +124,13 @@ const SelectParticipants = ({ route }) => {
             </View>
             <View style={styles.cardFooter}>
               <View style={{flex:1/3,justifyContent:"center",alignItems:"center",borderRightWidth:1,borderColor:Colors.bordergrey}}>
-                <TouchableOpacity onPress={() => navigation.navigate('AddParticipant')}>
+                <TouchableOpacity 
+                  //onPress={() => navigation.navigate('AddParticipant')}
+                  onPress={() => handleAddPress(tournamnetSportsId)}
+                >
                   <Image source={add} style={styles.addImage} />
                 </TouchableOpacity>
-                <Text style={styles.addText}>Add</Text>
+                <Text style={styles.addText}>{Config.add}</Text>
               </View>
               <View style={{ flex: 1 }}>
                 <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
@@ -114,6 +141,7 @@ const SelectParticipants = ({ route }) => {
                       <Text style={styles.addText}>
                         {playerItem.PlayerName || playerItem.TeamName || 'Unknown Player'}
                       </Text>
+                      <Text>DependentTypeId : {playerItem.DependentTypeId}</Text>
                     </View>
                   ))}
                 </ScrollView>
@@ -127,7 +155,6 @@ const SelectParticipants = ({ route }) => {
 };
 
 const styles = StyleSheet.create({
-  // Your styles go here
   scrollContainer: {
     paddingBottom: 20,
     marginTop:12

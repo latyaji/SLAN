@@ -690,7 +690,6 @@ const Esporttournamnet = ({navigation}: any) => {
 
         <Button
           tittle="Register"
-          // onPress={() => navigation.navigate('SelectParticipants')}
           onPress={handleRegister}
         />
       </ScrollView>
