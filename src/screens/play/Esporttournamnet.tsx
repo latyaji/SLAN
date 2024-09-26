@@ -1,5 +1,4 @@
 import {RouteProp, useRoute} from '@react-navigation/native';
-import axios from 'axios';
 import React, {useEffect, useState} from 'react';
 import {
   Image,
@@ -82,11 +81,11 @@ const Esporttournamnet = ({navigation}: any) => {
       let selectedItem;
   
       if (selectedradio === 1) {
-        selectedItem = groupTittle[key][index];
+        selectedItem = groupTittle[key]?.[index];
       } else if (selectedradio === 2) {
-        selectedItem = SportgroupTittle[key][index];
+        selectedItem = SportgroupTittle[key]?.[index];
       } else if (selectedradio === 3) {
-        selectedItem = MonthTittle[key][index];
+        selectedItem = MonthTittle[key]?.[index];
       }
       return {
         id: selectedItem?.TournamentId || null,
@@ -294,6 +293,8 @@ const Esporttournamnet = ({navigation}: any) => {
             groupedData[groupName].push({
               SportName: item.SportName,
               SportFee: item.TournamentFee,
+              TournamentSportId: item.TournamentSportId,
+               TournamentId: item.TournamentId
             });
             setSportGroupTittle(groupedData);
           });
@@ -335,6 +336,8 @@ const Esporttournamnet = ({navigation}: any) => {
             groupedData[groupName].push({
               SportName: item.SportName,
               SportFee: item.TournamentFee,
+              TournamentSportId: item.TournamentSportId,
+                TournamentId: item.TournamentId
             });
             setMonthTittle(groupedData);
           });

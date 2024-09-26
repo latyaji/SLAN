@@ -11,7 +11,8 @@ export  const Colors = {
     inputgrey:"#b1b5b2",
     success:"#008000",
     lesslightgrey:"#728192",
-    bordergrey:"#BDCAD9"
+    bordergrey:"#BDCAD9",
+    lightbordergrey:"#BDCAD980"
     
 
 }
