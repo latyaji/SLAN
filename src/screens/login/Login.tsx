@@ -1,8 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
-import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Image, Text, TouchableOpacity, View } from 'react-native';
 import {
   scale as s,
   verticalScale as vh
@@ -18,6 +17,7 @@ import {
   setLoginPhone,
 } from '../../store/Slice/LoginSlice';
 import { AppDispatch, RootState } from '../../store/Store';
+import apiInstance from '../../utils/apiInstance';
 import { lockIcon, phoneIcon, warning } from '../../utils/assets';
 import { Colors } from '../../utils/Colors';
 import { Config } from '../../utils/Config';
@@ -25,7 +25,6 @@ import { globalStyles } from '../../utils/GlobalCss';
 
 const Login = ({navigation: {goBack}}: any) => {
   const navigation = useNavigation();
-  const [selectedValue, setSelectedValue] = useState('option1');
   const [loginMsg, setLoginMsg] = useState({text: '', type: ''});
   const [selectedradio, setSelectedRadio] = useState(1);
 
@@ -37,18 +36,13 @@ const Login = ({navigation: {goBack}}: any) => {
 
   const loginapi = () => {
     dispatch(setIsloading(true));
-    axios
+    apiInstance
       .post(
-        'https://dev-slansports.azurewebsites.net/Account/LogOn/primary',
+        'Account/LogOn/primary',
         {
           UserName: loginPhone,
           Password: loginPassword,
-        },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        },
+        }
       )
       .then(response => {
         dispatch(setIsloading(false));
@@ -72,10 +66,7 @@ const Login = ({navigation: {goBack}}: any) => {
     return loginPhone.trim().length === 10 && loginPassword.trim().length === 4;
   };
 
-  const otpVerify = () => {
-    setSelectedValue('option2');
-    navigation.navigate('LoginWithOtp');
-  };
+
 
   useEffect(() => {
     if (loginMsg.text) {
@@ -110,28 +101,7 @@ const Login = ({navigation: {goBack}}: any) => {
         />
         {/* {loginMsg.type !== 'success' && <Text style={globalStyles.errormsg}>{Config.entercorrectmobile}</Text> } */}
 
-        {/* <View style={styles.radioGroup}>
-          <View style={styles.radioButton}>
-            <RadioButton.Android
-              value="option1"
-              status={selectedValue === 'option1' ? 'checked' : 'unchecked'}
-              onPress={() => setSelectedValue('option1')}
-              color={Colors.Orange}
-            />
-            <Text style={styles.radioLabel}>{Config.passcode}</Text>
-          </View>
-
-          <View style={styles.radioButton}>
-            <RadioButton.Android
-              value="option2"
-              status={selectedValue === 'option2' ? 'checked' : 'unchecked'}
-              onPress={() => otpVerify()}
-              color={Colors.Orange}
-            />
-            <Text style={styles.radioLabel}>{Config.otp}</Text>
-          </View>
-        </View> */}
-        <View style={{flexDirection:"row",marginTop:vh(20),marginBottom:vh(20)}}>
+        <View style={globalStyles.radionbtnConatiner}>
           <View style={globalStyles.btncontainer}>
             <TouchableOpacity
               onPress={() => setSelectedRadio(1)}
@@ -163,7 +133,7 @@ const Login = ({navigation: {goBack}}: any) => {
           maxLength={4}
         />
         <TouchableOpacity onPress={() => navigation.navigate('Forgot')}>
-          <Text style={styles.forgottxt}>{Config.forgotpassword}</Text>
+          <Text style={globalStyles.forgottxt}>{Config.forgotpassword}</Text>
         </TouchableOpacity>
         <Button
           tittle={Config.login}
@@ -192,7 +162,6 @@ const Login = ({navigation: {goBack}}: any) => {
               
             {loginMsg.type !== 'success' && (
               <Image source={warning}/>
-             // <Icon name="warning" size={22} color={'#FFCE31'} />
             )}
             <Text
               style={
@@ -211,27 +180,4 @@ const Login = ({navigation: {goBack}}: any) => {
 
 export default Login;
 
-const styles = StyleSheet.create({
-  radioGroup: {
-    flexDirection: 'row',
-    marginTop: 20,
-    borderRadius: 8,
-    marginBottom: 20,
-  },
-  radioButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginRight: 20,
-  },
-  radioLabel: {
-    fontSize: s(15),
-    color: Colors.black,
-    fontFamily: Config.medium,
-  },
-  forgottxt: {
-    fontFamily: Config.medium,
-    fontSize: s(12),
-    alignSelf: 'flex-end',
-    color: Colors.lightOrange,
-  },
-});
+

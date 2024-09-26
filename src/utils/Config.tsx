@@ -65,7 +65,7 @@ selectparticipants : "Select Participants ",
 addparticipants  : "Add Participants  ",
 male : "Male",
 female : "Female",
-DOB : "Date of Birth",
+DOB : "Date of Birth ",
 idproff : "ID Proof"
 
 }

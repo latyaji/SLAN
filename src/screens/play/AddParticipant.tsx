@@ -44,7 +44,7 @@ const AddParticipant = () => {
 
   const onDateChange = date => {
     setSelectedStartDate(date);
-    setIsCalendarVisible(false); // Close calendar after date selected
+    setIsCalendarVisible(false); // Close calendar after date select
   };
 
   const openCalendar = () => {
@@ -129,11 +129,7 @@ const AddParticipant = () => {
             justifyContent: 'space-between',
           }}>
           <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
+            style={globalStyles.calenderConatiner}>
             <TouchableOpacity onPress={() => openCalendar()}>
               <Image
                 source={calender}
@@ -145,15 +141,12 @@ const AddParticipant = () => {
               placeholderTextColor="#b1b5b2"
               style={globalStyles.regulareTxt}
               value={choosedDate}
+              editable={false}
             />
           </View>
 
           <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
+            style={globalStyles.calenderConatiner}>
             <TextInput
               placeholder={Config.idproff}
               placeholderTextColor="#b1b5b2"

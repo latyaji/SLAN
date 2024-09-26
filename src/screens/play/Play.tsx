@@ -13,9 +13,12 @@ import { clearLoginData, setIsloading } from '../../store/Slice/LoginSlice';
 import { Banner } from '../../utils/assets';
 import { Config } from '../../utils/Config';
 import { globalStyles } from '../../utils/GlobalCss';
+import { useDispatch } from 'react-redux';
 
 const Play = () => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+
   const [tournamnet, setTournamnet] = useState({});
 
   useEffect(() => {
@@ -23,20 +26,20 @@ const Play = () => {
   }, []);
 
   const tournamnetApiCall = async () => {
-    setIsloading(true)
+    dispatch(setIsloading(true));
     axios
       .post(
         'https://dev-slansports.azurewebsites.net/Public/viewData/5/Home_Tournaments',
       )
       .then(response => {
-        setIsloading(false)
+         dispatch(setIsloading(false));
 
         if (response.data) {
           setTournamnet(response.data.data.root.rowData_list);
         }
       })
       .catch(error => {
-        setIsloading(false)
+         dispatch(setIsloading(false));
         console.log('Error message: ', error.message);
       });
   };

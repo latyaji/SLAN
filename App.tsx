@@ -45,3 +45,43 @@ export default App;
 
 
 
+
+
+// import React, { useState } from 'react';
+// import { View, Button, Text } from 'react-native';
+// import DocumentPicker from 'react-native-document-picker';
+
+// const App = () => {
+//   const [file, setFile] = useState(null);
+
+//   const pickDocument = async () => {
+//     try {
+//       const res = await DocumentPicker.pick({
+//         type: [DocumentPicker.types.allFiles], // You can specify types here
+//       });
+//       setFile(res[0]); // Access the first file from the array
+//     } catch (err) {
+//       if (DocumentPicker.isCancel(err)) {
+//         console.log('User canceled the picker');
+//       } else {
+//         console.error('Error picking document: ', err);
+//       }
+//     }
+//   };
+
+//   console.log("file----", file);
+
+//   return (
+//     <View style={{ padding: 20 }}>
+//       <Button title="Pick Document" onPress={pickDocument} />
+//       {file && (
+//         <Text>
+//           Selected File: {file.name}
+//         </Text>
+//       )}
+//     </View>
+//   );
+// };
+
+// export default App;
+

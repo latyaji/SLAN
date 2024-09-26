@@ -175,6 +175,9 @@ export const globalStyles = StyleSheet.create({
     borderRadius: 20,
     margin: 3,
   },
+  radionbtnConatiner:{
+    flexDirection:"row",marginTop:vh(20),marginBottom:vh(20)
+  },
   radiotxt: {
     marginLeft: 10,
     fontFamily:Config.regular,
@@ -209,6 +212,35 @@ export const globalStyles = StyleSheet.create({
     borderBottomWidth: 1,
     padding: s(3),
     borderColor: Colors.bordergrey,
+  },
+  calenderConatiner:{
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  html: {
+    fontSize: s(16),
+    color: '#333',
+    a: {
+      fontWeight: '300',
+      color: '#FF3366', 
+    },
+  },
+  forgottxt: {
+    fontFamily: Config.medium,
+    fontSize: s(12),
+    alignSelf: 'flex-end',
+    color: Colors.lightOrange,
+  },
+  rulesConatiner: {
+    flexDirection: 'row',
+    marginTop: vs(12),
+    borderBottomWidth: 1,
+    alignItems: 'center',
+    paddingVertical: 10,
+    borderTopWidth: 1,
+    borderColor: Colors.bordergrey,
+    justifyContent: 'space-between',
   }
 
 });

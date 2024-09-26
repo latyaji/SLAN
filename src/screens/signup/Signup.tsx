@@ -6,6 +6,7 @@ import {
   Modal,
   StyleSheet,
   Text,
+  TextInput,
   TouchableOpacity,
   View,
 } from 'react-native';
@@ -25,6 +26,7 @@ import {
 import { AppDispatch, RootState } from '../../store/Store';
 import {
   alertIcon,
+  calender,
   CheckTermsIcon,
   lockIcon,
   phoneIcon,
@@ -34,6 +36,7 @@ import {
 import { Colors } from '../../utils/Colors';
 import { Config } from '../../utils/Config';
 import { globalStyles } from '../../utils/GlobalCss';
+import CalendarPicker from 'react-native-calendar-picker';
 
 
 import HTMLView from 'react-native-htmlview';
@@ -43,9 +46,11 @@ import {
 } from 'react-native-size-matters';
 import CustomModal from '../../component/CustomModal';
 import { setIsloading } from '../../store/Slice/LoginSlice';
-import Loader from '../../component/Loader';
 import Internet from '../InternetCheck/Internet';
 import { initializeNetworkListener } from '../../store/Slice/NetworkSlice';
+import moment from 'moment';
+import { ScrollView } from 'react-native';
+import apiInstance from '../../utils/apiInstance';
 
 
 const Signup = ({navigation: {goBack}}:any) => {
@@ -58,6 +63,10 @@ const Signup = ({navigation: {goBack}}:any) => {
   const [isAlertVisible, setAlertVisible] = useState(false);
   const [terms, setterms] = useState('');
   const [isModalVisible, setModalVisible] = useState(false);
+  const [selectedradio, setSelectedRadio] = useState(1);
+  const [isCalendarVisible, setIsCalendarVisible] = useState(false);
+  const [selectedStartDate, setSelectedStartDate] = useState(null);
+
 
   const isFormValid = () => {
     return (
@@ -65,6 +74,7 @@ const Signup = ({navigation: {goBack}}:any) => {
       phone.trim().length === 10 &&
       password.trim() !== '' &&
       confirmPassword.trim() !== '' &&
+      choosedDate.trim() !== '' &&
       checked
     );
   };
@@ -77,20 +87,23 @@ const Signup = ({navigation: {goBack}}:any) => {
 
     dispatch(setErrorMessage(''));
     dispatch(setIsloading(true))
-    axios
+    apiInstance
       .post(
-        'https://dev-slansports.azurewebsites.net/Account/Register',
+        'Account/Register',
         {
           UserName: phone,
           Password: password,
           ConfirmPassword: confirmPassword,
           FirstName: name,
+          DateofBirth: choosedDate,
+          Genderid: selectedradio
         },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        },
+        // {
+        //   headers: {
+        //     'Content-Type': 'application/json',
+        //   },
+        // },
+       
       )
       .then(response => {
         dispatch(setIsloading(false))
@@ -105,6 +118,8 @@ const Signup = ({navigation: {goBack}}:any) => {
         showAlert();
       });
   };
+
+
 
   const showAlert = () => {
     setAlertVisible(true);
@@ -144,6 +159,20 @@ const Signup = ({navigation: {goBack}}:any) => {
     dispatch(initializeNetworkListener());
   };
 
+  const openCalendar = () => {
+    setIsCalendarVisible(true);
+  };
+
+  const onDateChange = (date: React.SetStateAction<null>) => {
+    setSelectedStartDate(date);
+    setIsCalendarVisible(false); // Close calendar after date select
+  };
+  const choosedDate = selectedStartDate
+  ? moment(selectedStartDate).format('YYYY-DD')
+  : '';
+
+ 
+
   useEffect(()=>{termandcondition},[])
 
   return (
@@ -158,7 +187,7 @@ const Signup = ({navigation: {goBack}}:any) => {
         tittle={Config.otpVerfication}
         onPress={() => goBack()}
       />
-      <View style={globalStyles.screenSpacing}>
+      <ScrollView style={globalStyles.screenSpacing}>
         <Text style={globalStyles.largeTxt}>{Config.SignHeading}</Text>
         <TextField
           placeholder={Config.entername}
@@ -192,6 +221,61 @@ const Signup = ({navigation: {goBack}}:any) => {
           secureTextEntry={true}
           maxLength={4}
         />
+           <View style={globalStyles.radionbtnConatiner}>
+          <View style={globalStyles.btncontainer}>
+            <TouchableOpacity
+              onPress={() => setSelectedRadio(1)}
+              style={[globalStyles.btnbox,{borderColor: selectedradio == 1 ? Colors.Orange : Colors.bordergrey}]}>
+              {selectedradio == 1 ? (
+                <View style={globalStyles.btnboxbg}></View>
+              ) : null}
+            </TouchableOpacity>
+            <Text style={globalStyles.radiotxt}>{Config.male}</Text>
+          </View>
+          <View style={[globalStyles.btncontainer,{marginLeft:s(40)}]}>
+            <TouchableOpacity
+              onPress={() => setSelectedRadio(2)}
+              style={[globalStyles.btnbox,{borderColor: selectedradio == 2 ? Colors.Orange : Colors.bordergrey}]}>
+              {selectedradio == 2 ? (
+                <View style={globalStyles.btnboxbg}></View>
+              ) : null}
+            </TouchableOpacity>
+            <Text style={globalStyles.radiotxt}>{Config.female}</Text>
+          </View>
+        </View>
+
+          <View
+            style={{flexDirection:"row",alignItems:"center",paddingVertical:vh(12)}}>
+            <TouchableOpacity onPress={() => openCalendar()}>
+              <Image
+                source={calender}
+                style={[globalStyles.textIcon, {tintColor: '#FE6725'}]}
+              />
+            </TouchableOpacity>
+            <TextInput
+              placeholder={Config.DOB}
+              placeholderTextColor="#b1b5b2"
+              style={globalStyles.regulareTxt}
+             value={choosedDate}
+             editable={false}
+            />
+          </View>
+
+       
+        {isCalendarVisible && (
+          <CalendarPicker
+            onDateChange={onDateChange}
+            selectedDayTextColor="#FFF"
+            startFromMonday={true}
+            allowRangeSelection={true}
+            todayBackgroundColor="#F15A2B"
+            textStyle={{
+              fontFamily: Config.regular,
+              color: '#FE6725A1',
+            }}
+          />
+        )}
+
         {errorMessage ? (
           <Text style={globalStyles.errormsg}>{errorMessage}</Text>
         ) : null}
@@ -240,7 +324,7 @@ const Signup = ({navigation: {goBack}}:any) => {
             onRequestClose={hideModal}>
             <View style={styles.modalBackground}>
               <View style={styles.modalContainer}>
-                <HTMLView value={terms} stylesheet={styles.html} />
+                <HTMLView value={terms} stylesheet={globalStyles.html} />
                 <TouchableOpacity
                   style={styles.closeButton}
                   onPress={hideModal}>
@@ -250,7 +334,7 @@ const Signup = ({navigation: {goBack}}:any) => {
             </View>
           </Modal>
         </View>
-      </View>
+      </ScrollView>
         </>
        )
     
@@ -298,13 +382,5 @@ const styles = StyleSheet.create({
   closeButtonText: {
     color: '#fff',
     fontSize: s(16),
-  },
-  html: {
-    fontSize: s(16),
-    color: '#333',
-    a: {
-      fontWeight: '300',
-      color: '#FF3366', 
-    },
-  },
+  }
 });
