@@ -68,12 +68,7 @@ const Esporttournamnet = ({navigation}: any) => {
     });
   };
 
-  // const handleRegister = () => {
-  //   const selectedIDs = Array.from(checkedItems);
-   
-  //   // Navigate to the next screen and pass the selected IDs
-  //   navigation.navigate('SelectParticipants', { selectedIDs });
-  // };
+
 
   const handleRegister = () => {
     const selectedIDs = Array.from(checkedItems).map(item => {
@@ -98,7 +93,7 @@ const Esporttournamnet = ({navigation}: any) => {
     });
   
     if (selectedIDs.length === 0) {
-      alert('Please select at least one item to register.');
+      alert('Please select at least one sport to register.');
       return;
     }
   
@@ -441,7 +436,7 @@ const Esporttournamnet = ({navigation}: any) => {
                 key={`${key}-${index}`} // Use a unique key by combining group name and index
                 style={globalStyles.eventsListseparator}>
                 <View style={{flexDirection: 'row'}}>
-                  <TouchableOpacity onPress={() => toggleCheckbox(key, index)}>
+                  <TouchableOpacity onPress={() => toggleCheckbox(key, index,item)}>
                     <Image
                       source={
                         checkedItems.has(`${key}-${index}`)
@@ -567,7 +562,8 @@ const Esporttournamnet = ({navigation}: any) => {
         />
 
         <Text style={[globalStyles.cardtittletxt, {marginTop: vs(12)}]}>
-          {Config.about} {tournamentId}
+          {Config.about} 
+          {/* {tournamentId} */}
         </Text>
         <Text
           style={{

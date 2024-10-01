@@ -14,6 +14,7 @@ import {s, vs} from 'react-native-size-matters';
 import {Colors} from '../../utils/Colors';
 import {
   add,
+  alertIcon,
   calender,
   dropdown,
   dropdownIcon,
@@ -24,6 +25,8 @@ import {globalStyles} from '../../utils/GlobalCss';
 import CalendarPicker from 'react-native-calendar-picker';
 import moment from 'moment';
 import DocumentPicker from 'react-native-document-picker';
+import apiInstance from '../../utils/apiInstance';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const AddParticipant = () => {
   const [selectedradio, setSelectedRadio] = useState(1);
@@ -32,6 +35,7 @@ const AddParticipant = () => {
   const [dropdownIcons, setIsDropdown] = useState(false);
   const [selectIdProof, setselectIdProof] = useState('');
   const [file, setFile] = useState(null);
+  const [addParticipantsName,setaddParticipantsName] = useState("")
 
   const navigation = useNavigation();
 
@@ -45,6 +49,50 @@ const AddParticipant = () => {
     {tittle: 'Others'},
   ];
 
+  const isFormValid = () => {
+    return (
+      addParticipantsName.trim() !== '' &&
+     
+      selectIdProof.trim() !== '' &&
+      file  !== null &&
+      selectedStartDate !== null 
+    );
+  };
+
+  const AddParticipantApi = async() => {
+    const getToken = await AsyncStorage.getItem('TOKEN');
+   const response =  await apiInstance.post('/private/data/2102/default',
+    {
+      AddFamilyorTeam_card: [
+          {
+              Name: addParticipantsName,
+              Gender: selectedradio,
+              DateofBirth: choosedDate, //2013-10 try this
+              TeamName: null,
+              Typeid: "1",
+              Sports: null,
+              idProof: null,
+              userIdProof: null,
+              idProofResourceId: null,
+              memberId: null,
+              mobileNumber: 1234567890, // No quotes for numbers
+              isCallFrom: null
+          }
+      ],
+      version: "M201810251014"
+  } ,
+  {
+    headers: {
+      Authorization: `Bearer ${getToken}`,
+    },
+  } 
+   )
+   if(response.data.Message == "Success"){
+    alert("Partner added succefully")
+    navigation.navigate("Play")
+   }
+
+  }
   const pickDocument = async () => {
     try {
       const res = await DocumentPicker.pick({
@@ -60,7 +108,6 @@ const AddParticipant = () => {
     }
   };
 
-  console.log('file----', file);
 
   const onDateChange = date => {
     setSelectedStartDate(date);
@@ -72,7 +119,7 @@ const AddParticipant = () => {
   };
 
   const choosedDate = selectedStartDate
-    ? moment(selectedStartDate).format('MM/DD/YYYY')
+    ? moment(selectedStartDate).format('YYYY-DD')
     : '';
 
   const openDocList = () => {
@@ -83,6 +130,7 @@ const AddParticipant = () => {
     setselectIdProof(item.tittle);
     setIsDropdown(false);
   };
+ 
 
   return (
     <View>
@@ -96,8 +144,8 @@ const AddParticipant = () => {
         <TextField
           placeholder={Config.entername}
           source={userIcon}
-          // value={name}
-          // onChangeTxt={text => dispatch(setName(text))}
+          value={addParticipantsName}
+          onChangeTxt={text => setaddParticipantsName(text)}
           maxLength={25}
         />
         <View
@@ -239,12 +287,15 @@ const AddParticipant = () => {
           </TouchableOpacity>
           <Text
             style={{fontSize: s(13), color: Colors.Orange, paddingLeft: 12}}>
-            Upload ID Proof
+            {/* Upload ID Proof */}
+            {file ? `${file.name}` : "Upload ID Proof"}
           </Text>
+          
         </View>
         <Button
           tittle="Save"
-          // onPress={handleRegister}
+          onPress={AddParticipantApi}
+          disabled={!isFormValid()}
         />
       </View>
 

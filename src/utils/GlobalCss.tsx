@@ -241,6 +241,11 @@ export const globalStyles = StyleSheet.create({
     borderTopWidth: 1,
     borderColor: Colors.bordergrey,
     justifyContent: 'space-between',
+  },
+  twelFont:{
+    fontSize:s(13),
+    fontFamily: Config.regular,
+    color:Colors.black
   }
 
 });

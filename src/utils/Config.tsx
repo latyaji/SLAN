@@ -69,7 +69,10 @@ DOB : "Date of Birth ",
 idproff : "ID Proof",
 add : "Add",
 addteam:"Add Team",
-addpartner:"Add Partner"
+addpartner:"Add Partner",
+enterdetails: "Enter Details " ,
+save : "Save",
+addteamname : "Add Team Name"
 
 
 
