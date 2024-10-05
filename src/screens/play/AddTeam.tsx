@@ -57,7 +57,7 @@ const AddTeam = () => {
     <View>
       <Header
         showImage={false}
-        tittle={Config.addpartner}
+        tittle={Config.addteam}
         backImage={true}
         onPress={() => navigation.goBack()}
       />

@@ -682,7 +682,7 @@ const Esporttournamnet = ({navigation}: any) => {
         {selectedradio == 3 && handleMonth()}
 
         {rulesregulationssection()}
-        {termdrop && <HTMLView value={terms} />}
+        {termdrop && <HTMLView value={terms ? terms : "no rules"} />}
 
         <Button
           tittle="Register"

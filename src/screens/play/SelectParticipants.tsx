@@ -24,7 +24,8 @@ const SelectParticipants = ({route}) => {
   const navigation = useNavigation();
   const [playerDataByTournamentId, setPlayerDataByTournamentId] = useState({});
   const selectedSports = route.params?.selectedItems;
-  const [selectedCheckbox, setSelectedCheckbox] = useState(null); // Store selected IDs
+  // const [selectedCheckbox, setSelectedCheckbox] = useState(null); // Store selected IDs
+  const [selectedCheckboxes, setSelectedCheckboxes] = useState([]); // Store selected IDs
   const [totalAmount, setTotalAmount] = useState(0);
 
 
@@ -80,12 +81,25 @@ const SelectParticipants = ({route}) => {
     }
   };
 
+  // const handleCheckbox = (playerID, teamID) => {
+  //   // Set selectedCheckbox to the currently selected ID
+  //   setSelectedCheckbox(prev =>
+  //     prev === playerID || prev === teamID ? null : playerID || teamID,
+  //   );
+  // };
+
   const handleCheckbox = (playerID, teamID) => {
-    // Set selectedCheckbox to the currently selected ID
-    setSelectedCheckbox(prev =>
-      prev === playerID || prev === teamID ? null : playerID || teamID,
-    );
+    const idToToggle = playerID || teamID;
+
+    setSelectedCheckboxes(prev => {
+      if (prev.includes(idToToggle)) {
+        return prev.filter(id => id !== idToToggle);
+      } else {
+        return [...prev, idToToggle];
+      }
+    });
   };
+
 
   useEffect(() => {
     const fetchAllParticipants = async () => {
@@ -183,7 +197,7 @@ const SelectParticipants = ({route}) => {
                         // console.log("playerItem.playerID----->>>>>>>>",JSON.stringify(playerItem.playerID,null,4)),
                         // console.log("playerItem.teamid----->>>>>>>>",JSON.stringify(playerItem.TeamId,null,4))
                         <View key={playerIndex} style={{padding: 16}}>
-                          <TouchableOpacity
+                          {/* <TouchableOpacity
                             onPress={() =>
                               handleCheckbox(
                                 playerItem.playerID,
@@ -199,7 +213,19 @@ const SelectParticipants = ({route}) => {
                               }
                               style={{marginLeft: 10}}
                             />
-                          </TouchableOpacity>
+                          </TouchableOpacity> */}
+                           <TouchableOpacity
+                        onPress={() => handleCheckbox(playerItem.playerID, playerItem.TeamId)}>
+                        <Image
+                          source={
+                            selectedCheckboxes.includes(playerItem.playerID) ||
+                            selectedCheckboxes.includes(playerItem.TeamId)
+                              ? CheckTermsIcon
+                              : UnCheckTermsIcon
+                          }
+                          style={{marginLeft: 10}}
+                        />
+                      </TouchableOpacity>
 
                           <Text style={styles.addText}>
                             {playerItem.PlayerName ||

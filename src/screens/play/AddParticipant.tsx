@@ -14,6 +14,7 @@ import {s, vs} from 'react-native-size-matters';
 import {Colors} from '../../utils/Colors';
 import {
   add,
+  addimg,
   alertIcon,
   calender,
   dropdown,
@@ -211,6 +212,7 @@ const AddParticipant = () => {
           </View>
 
           <View style={globalStyles.calenderConatiner}>
+          <Image source={addimg}  style={globalStyles.textIcon}/>
             <TextInput
               placeholder={Config.idproff}
               placeholderTextColor="#b1b5b2"
@@ -247,6 +249,7 @@ const AddParticipant = () => {
               padding: 12,
               margin: 20,
             }}>
+              
             <Text style={globalStyles.radiotxt}>Id proof*</Text>
             <View
               style={{
@@ -298,15 +301,6 @@ const AddParticipant = () => {
           disabled={!isFormValid()}
         />
       </View>
-
-      {/* <View style={{ padding: 20 }}>
-       <Button title="Pick Document" onPress={pickDocument} />
-       {file && (
-        <Text>
-          Selected File: {file.name}
-        </Text>
-      )}
-    </View> */}
     </View>
   );
 };
