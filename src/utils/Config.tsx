@@ -72,7 +72,9 @@ addteam:"Add Team",
 addpartner:"Add Partner",
 enterdetails: "Enter Details " ,
 save : "Save",
-addteamname : "Add Team Name"
+addteamname : "Add Team Name",
+childteam : "Child Team",
+nonchildteam: "Non-Child Team"
 
 
 
