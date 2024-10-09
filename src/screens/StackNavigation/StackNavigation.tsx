@@ -6,6 +6,7 @@ import {
   AddParticipant,
   AddPartner,
   AddTeam,
+  AllEvents,
   DrawerNavigation,
   Esporttournamnet,
   Forgot,
@@ -15,6 +16,7 @@ import {
   SelectParticipants,
   Signup,
   SplashScreen,
+  ViewAllMatches,
   ViewAllTournaments
 } from '../index';
 import LoginOtpVerification from '../login/LoginOtpVerification';
@@ -103,6 +105,14 @@ function StackNavigation() {
               <Stack.Screen
               name="AddPartner"
               component={AddPartner}
+            />
+              <Stack.Screen
+              name="AllEvents"
+              component={AllEvents}
+            />
+              <Stack.Screen
+              name="ViewAllMatches"
+              component={ViewAllMatches}
             />
           </>
         )}

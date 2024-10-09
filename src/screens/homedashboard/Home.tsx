@@ -15,7 +15,6 @@ const Home = () => {
 
 
   const logout = async () => {
-    console.log("logggg")
     try {
       await AsyncStorage.removeItem('TOKEN');
       

@@ -15,6 +15,8 @@ import axios from 'axios';
 import { AppDispatch, RootState } from '../../store/Store';
 import { useDispatch, useSelector } from 'react-redux';
 import { setIsloading } from '../../store/Slice/LoginSlice';
+import { ViewAllList } from '../../component/Loader';
+import apiInstance from '../../utils/apiInstance';
 
 
 
@@ -25,9 +27,8 @@ const ViewAllTournaments = ({navigation: {goBack}}:any) => {
 
   const viewalltournamnetApiCall = async () => {
     dispatch(setIsloading(true))
-    axios
-      .post(
-        'https://dev-slansports.azurewebsites.net/Public/viewData/502/Alltournaments_Card',
+    apiInstance.post(
+        'Public/viewData/502/Alltournaments_Card',
       )
       .then(response => {
         dispatch(setIsloading(false))
@@ -44,54 +45,11 @@ const ViewAllTournaments = ({navigation: {goBack}}:any) => {
   useEffect(() => {
     viewalltournamnetApiCall();
   }, []);
+  
   return (
     <View style={{flex:1}}>
       <Header showImage={false} tittle={Config.tournaments} backImage={true}  onPress={() => goBack()} />
-      <FlatList
-        data={alltournamnet}
-        horizontal={false}
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={globalStyles.listContainer}
-        renderItem={({item}) => (
-          <View
-            style={{
-              borderBottomWidth: 1,
-              padding: s(5),
-              flexDirection: 'row',
-              borderColor: '#BDCAD9',
-            }}>
-            <View>
-              <Image
-                source={
-                  item.Tournament_Image ? {uri: item.Tournament_Image} : noImage
-                }
-                style={{width: s(50), height: vs(50), resizeMode: 'cover'}}
-              />
-            </View>
-            <View style={{marginLeft: s(12)}}>
-              <Text
-                style={globalStyles.cardtittletxt}>
-                {item.Tournament_Name}
-              </Text>
-
-              <Text
-                style={{
-                  fontSize: s(13),
-                  color: Colors.lightOrange,
-                }}>
-                {item.TrnmtPeriod}
-              </Text>
-              <Text
-                style={{
-                  fontSize: s(12),
-                  color: Colors.lesslightgrey,
-                }}>
-                {item.TrnmtSpclType}
-              </Text>
-            </View>
-          </View>
-        )}
-      />
+      <ViewAllList data = {alltournamnet} />
     </View>
   );
 };

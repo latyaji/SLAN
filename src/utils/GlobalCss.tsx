@@ -156,6 +156,12 @@ export const globalStyles = StyleSheet.create({
       color: Colors.black,
       width: s(280),
   },
+  nodatatxt:{
+    fontFamily: Config.regular,
+      fontSize: s(12),
+     // color: Colors.black,
+      width: s(280),
+  },
   btncontainer: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -246,6 +252,11 @@ export const globalStyles = StyleSheet.create({
     fontSize:s(13),
     fontFamily: Config.regular,
     color:Colors.black
-  }
+  },
+  borderBottomtrack: {borderBottomWidth:1,marginTop:12,borderColor:Colors.bordergrey},
+  trackViewallbtntxt: {fontSize:s(14),fontFamily:Config.regular,color:Colors.Orange},
+  nodatatracktxt: {fontSize:s(13),fontFamily:Config.regular},
+  matchesView:{flexDirection:"row",justifyContent:"space-between",marginTop:vs(12),marginBottom:vs(17)},
+  matchesTxt:{fontSize:s(17),fontFamily:Config.bold,color:Colors.black}
 
 });

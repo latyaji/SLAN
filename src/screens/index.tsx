@@ -19,6 +19,8 @@ import SelectParticipants from "./play/SelectParticipants";
 import AddParticipant from "./play/AddParticipant";
 import AddTeam from "./play/AddTeam";
 import AddPartner from "./play/AddPartner";
+import AllEvents from "./track/AllEvents";
+import ViewAllMatches from "./track/ViewAllMatches";
 
 export {
     Signup,
@@ -41,5 +43,7 @@ export {
     SelectParticipants,
     AddParticipant,
     AddTeam,
-    AddPartner
+    AddPartner,
+    AllEvents,
+    ViewAllMatches
 }
