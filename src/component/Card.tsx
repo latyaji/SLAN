@@ -37,6 +37,11 @@ const Cards = ({carddata,onPress}: cardsProps) => {
           </View>
         </TouchableOpacity>
       )}
+      ListEmptyComponent={() => (
+        <View style={{ padding: 20, alignItems: 'center' }}>
+          <Text style={{ fontSize: 16, color: 'gray' }}>No data found</Text>
+        </View>
+      )}
     />
   );
 };
