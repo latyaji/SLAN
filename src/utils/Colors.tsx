@@ -12,7 +12,8 @@ export  const Colors = {
     success:"#008000",
     lesslightgrey:"#728192",
     bordergrey:"#BDCAD9",
-    lightbordergrey:"#BDCAD980"
+    lightbordergrey:"#BDCAD980",
+    greyborder:"#EFEFEF"
     
 
 }

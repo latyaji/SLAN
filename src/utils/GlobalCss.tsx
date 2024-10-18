@@ -254,9 +254,60 @@ export const globalStyles = StyleSheet.create({
     color:Colors.black
   },
   borderBottomtrack: {borderBottomWidth:1,marginTop:12,borderColor:Colors.bordergrey},
-  trackViewallbtntxt: {fontSize:s(14),fontFamily:Config.regular,color:Colors.Orange},
+  trackViewallbtntxt: {fontSize:s(13),fontFamily:Config.regular,color:Colors.Orange},
   nodatatracktxt: {fontSize:s(13),fontFamily:Config.regular},
   matchesView:{flexDirection:"row",justifyContent:"space-between",marginTop:vs(12),marginBottom:vs(17)},
-  matchesTxt:{fontSize:s(17),fontFamily:Config.bold,color:Colors.black}
+  matchesTxt:{fontSize:s(17),fontFamily:Config.bold,color:Colors.black,fontWeight:"bold"},
+  trackgroupname:{fontSize:s(11),fontFamily:Config.regular,color:Colors.lesslightgrey},
+  tracklocation:{fontSize:s(15),fontFamily:Config.bold,color:Colors.lesslightgrey,marginVertical:6},
+  trackdate:{fontSize:s(11),fontFamily:Config.regular,color:Colors.lightOrange},
+  trackcardview:{justifyContent:"center",padding:15,borderBottomWidth:1,borderColor:Colors.bordergrey,backgroundColor:"#fff",marginHorizontal:12,marginVertical:6,},
+  trackleaguename:{textAlign:"center",fontSize:s(18),fontFamily:Config.medium},
+  trackplayernameview:{flexDirection:"row",justifyContent:"space-between",marginVertical:s(15),flexWrap:"wrap"},
+  trackplayername:{fontSize:s(20),fontFamily:Config.regular,color:Colors.black},
+  vstxt: {color:Colors.lightOrange,fontFamily:Config.bold,fontSize:s(20)},
+  playcarsimg:{width: s(325), height: vs(200), borderRadius: s(10)},
+  playcarddate:{flexDirection: 'row', marginTop: vs(12), marginLeft: s(2)},
+  playcardlocation:{flexDirection: 'row', marginTop: vs(12)},
+  locationimg:{width: s(20), height: vs(15), resizeMode: 'contain'},
+  topborder:{
+    borderTopWidth: 1,
+    borderColor: Colors.bordergrey,
+    marginTop: vs(12),
+  },
+  mediumorangetxt: {fontFamily:Config.bold,color:Colors.lightOrange,fontSize:s(15)},
+  mediumBlacktxt: {fontFamily:Config.bold,fontSize:s(14),color:Colors.black},
+  seventypercentcontainer:{flexDirection:"row",justifyContent:"space-between",width:"70%",marginTop:12},
+  toggleContainer: {
+    padding: 6,
+    margin: 12,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  button: {
+    flex: 1,
+    paddingVertical: 10,
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: Colors.bordergrey,
+  },
+  selectedButton: {
+    backgroundColor: Colors.lightOrange,
+  },
+  unselectedButton: {
+    backgroundColor: 'white',
+  },
+  selectedText: {
+    color: Colors.White,
+    fontFamily: Config.regular,
+    fontSize: s(12),
+  },
+  unselectedText: {
+    color: Colors.black,
+    fontFamily: Config.regular,
+    fontSize: s(12),
+  },
+  eventsPlayerName:{fontSize:s(15),fontFamily: Config.medium},
+  matchesContainer: {flexDirection:"row",justifyContent:"space-between",width:"50%",flexWrap:"wrap"}
 
 });

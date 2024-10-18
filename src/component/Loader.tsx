@@ -12,7 +12,8 @@ import {globalStyles} from '../utils/GlobalCss';
 import {Text} from 'react-native-paper';
 import {Config} from '../utils/Config';
 import {s, vs} from 'react-native-size-matters';
-import {noImage} from '../utils/assets';
+import {calender, location, noImage} from '../utils/assets';
+import { colors } from 'react-native-swiper-flatlist/src/themes';
 
 interface MatcherProps {
   tittle: string;
@@ -22,7 +23,22 @@ interface MatcherProps {
 
 interface ViewAllListProps {
   data: any;
+  onPress: () => any;
 }
+interface MatchesCardtProps {
+  matchedcarddata: any;
+}
+interface EventScheduleAllMatchesDataProps {
+  data: any;
+}
+
+interface ListCardDetailsProps {
+  img: any;
+  name: any;
+  date: any;
+  location: any;
+}
+
 
 const Loader = () => {
   return (
@@ -43,13 +59,53 @@ export const Matcher = (MatcherProps: any) => {
           <Text style={globalStyles.trackViewallbtntxt}>{Config.viewall}</Text>
         </TouchableOpacity>
       </View>
-      {/* <Text style={globalStyles.nodatatracktxt}>
-        {MatcherProps.nodatafound}
-      </Text> */}
-      {/* <View style={globalStyles.borderBottomtrack} /> */}
     </>
   );
 };
+
+export const Matchescard = (MatchesCardtProps: any) => {
+  return (
+    <View style={globalStyles.trackcardview}>
+      <Text style={globalStyles.trackleaguename}>
+        {MatchesCardtProps.matchedcarddata.LeagueName}
+      </Text>
+      <View style={globalStyles.trackplayernameview}>
+        <Text style={globalStyles.trackplayername}>
+          {MatchesCardtProps.matchedcarddata.Player1_Name}
+        </Text>
+        <Text style={globalStyles.vstxt}>VS</Text>
+        <Text style={globalStyles.trackplayername}>
+          {MatchesCardtProps.matchedcarddata.Player2_Name}
+        </Text>
+      </View>
+      <View style={{justifyContent: 'center', alignItems: 'center'}}>
+        <Text style={globalStyles.trackgroupname}>
+          {MatchesCardtProps.matchedcarddata.GroupName}
+        </Text>
+        <Text style={globalStyles.tracklocation}>
+          {MatchesCardtProps.matchedcarddata.Location}
+        </Text>
+        <Text style={globalStyles.trackdate}>
+          {MatchesCardtProps.matchedcarddata.StartDate}
+        </Text>
+      </View>
+    </View>
+  );
+};
+
+export const EventScheduleMatchesCard = (EventScheduleAllMatchesDataProps:any) =>{
+  return (
+    <View style={{padding:12,borderWidth:1,borderColor:Colors.lightbordergrey}}>
+    <View style={globalStyles.matchesContainer}>
+      <Text style={globalStyles.eventsPlayerName}>{EventScheduleAllMatchesDataProps.data.Player1_Name}</Text>
+      <Text style={[globalStyles.eventsPlayerName,{color:Colors.Orange}]}>VS</Text>
+      <Text style={globalStyles.eventsPlayerName}>{EventScheduleAllMatchesDataProps.data.Player2_Name}</Text>
+      <Text style={globalStyles.trackgroupname}>{EventScheduleAllMatchesDataProps.data.MactchName}</Text>
+      <Text style={globalStyles.trackdate}>{EventScheduleAllMatchesDataProps.data.StartDate}</Text>
+    </View>
+  </View>
+  )
+}
 
 export const ViewAllList = (ViewAllListProps: any) => {
   return (
@@ -59,13 +115,14 @@ export const ViewAllList = (ViewAllListProps: any) => {
       showsHorizontalScrollIndicator={false}
       contentContainerStyle={globalStyles.listContainer}
       renderItem={({item}) => (
-        <View
+        <TouchableOpacity
           style={{
             borderBottomWidth: 1,
             padding: s(5),
             flexDirection: 'row',
             borderColor: '#BDCAD9',
-          }}>
+          }}
+          onPress={() => ViewAllListProps.onPress(item)}>
           <View>
             <Image
               source={
@@ -94,16 +151,54 @@ export const ViewAllList = (ViewAllListProps: any) => {
               {item.TrnmtSpclType}
             </Text>
           </View>
-        </View>
+        </TouchableOpacity>
       )}
       ListEmptyComponent={() => (
-        <View style={{ padding: 20, alignItems: 'center' }}>
-          <Text style={{ fontSize: 16, color: 'gray' }}>No data found</Text>
+        <View style={{padding: 20, alignItems: 'center'}}>
+          <Text style={{fontSize: 16, color: 'gray'}}>No data found</Text>
         </View>
       )}
     />
   );
 };
+
+export const ListCardDetails = (ListCardDetailsProps: any) => {
+  return (
+    <>
+      <Image
+        source={{uri: ListCardDetailsProps.img}}
+        style={globalStyles.playcarsimg}
+      />
+
+      <Text style={[globalStyles.cardtittletxt, {marginTop: vs(12)}]}>
+        {ListCardDetailsProps.name}
+      </Text>
+
+      <View style={globalStyles.playcarddate}>
+        <Image source={calender} />
+        <Text
+          style={[
+            styles.cardLocationtxt,
+            {fontFamily: Config.regular, color: Colors.Orange},
+          ]}>
+          {ListCardDetailsProps.date}
+        </Text>
+      </View>
+
+      <View style={globalStyles.playcardlocation}>
+        <Image source={location} style={globalStyles.locationimg} />
+
+        <Text style={styles.cardLocationtxt}>
+          {ListCardDetailsProps.location}
+        </Text>
+      </View>
+
+      <View style={globalStyles.topborder} />
+    </>
+  );
+};
+
+
 
 const styles = StyleSheet.create({
   container: {
@@ -116,5 +211,11 @@ const styles = StyleSheet.create({
     right: 0,
     justifyContent: 'center',
     zIndex: 1000,
+  },
+  cardLocationtxt: {
+    marginLeft: 6,
+    fontFamily: Config.bold,
+    color: Colors.lesslightgrey,
+    fontSize: s(13),
   },
 });

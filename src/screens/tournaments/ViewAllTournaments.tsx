@@ -1,22 +1,13 @@
-import {useNavigation} from '@react-navigation/native';
-import React, {useEffect, useState} from 'react';
-import {View, Image, FlatList, Text} from 'react-native';
-import {Header} from '../../component';
-import {Config} from '../../utils/Config';
-import {Banner, noImage} from '../../utils/assets';
-import {globalStyles} from '../../utils/GlobalCss';
-import {
-  scale as s,
-  verticalScale as vs,
-  moderateScale as ms,
-} from 'react-native-size-matters';
-import {Colors} from '../../utils/Colors';
-import axios from 'axios';
-import { AppDispatch, RootState } from '../../store/Store';
-import { useDispatch, useSelector } from 'react-redux';
-import { setIsloading } from '../../store/Slice/LoginSlice';
+import { useNavigation } from '@react-navigation/native';
+import React, { useEffect, useState } from 'react';
+import { View } from 'react-native';
+import { useDispatch } from 'react-redux';
+import { Header } from '../../component';
 import { ViewAllList } from '../../component/Loader';
+import { setIsloading } from '../../store/Slice/LoginSlice';
+import { AppDispatch } from '../../store/Store';
 import apiInstance from '../../utils/apiInstance';
+import { Config } from '../../utils/Config';
 
 
 

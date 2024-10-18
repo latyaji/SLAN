@@ -1,14 +1,14 @@
-import {useNavigation} from '@react-navigation/native';
-import React, {useEffect, useState} from 'react';
-import {View, Text} from 'react-native';
-import {useDispatch} from 'react-redux';
-import {Header} from '../../component';
-import {ViewAllList} from '../../component/Loader';
-import {setIsloading} from '../../store/Slice/LoginSlice';
-import {AppDispatch} from '../../store/Store';
-import {Config} from '../../utils/Config';
-import apiInstance from '../../utils/apiInstance';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation } from '@react-navigation/native';
+import React, { useEffect, useState } from 'react';
+import { View } from 'react-native';
+import { useDispatch } from 'react-redux';
+import { Header } from '../../component';
+import { ViewAllList } from '../../component/Loader';
+import { setIsloading } from '../../store/Slice/LoginSlice';
+import { AppDispatch } from '../../store/Store';
+import { Config } from '../../utils/Config';
+import apiInstance from '../../utils/apiInstance';
 
 const AllEvents = ({navigation: {goBack}}: any) => {
   const navigation = useNavigation();
@@ -36,6 +36,11 @@ const AllEvents = ({navigation: {goBack}}: any) => {
       });
   };
 
+
+  const Eventdetails = (eventItem: any) => {
+    navigation.navigate("EventsDetails", { eventsdetails: eventItem });
+  };
+
   useEffect(() => {
     viewallEventsApiCall();
   }, []);
@@ -49,7 +54,7 @@ const AllEvents = ({navigation: {goBack}}: any) => {
         backImage={true}
         onPress={() => goBack()}
       />
-      <ViewAllList data={alltournamnet} />
+      <ViewAllList data={alltournamnet} onPress={(item:any) => Eventdetails(item)} />
     </View>
   );
 };

@@ -1,10 +1,9 @@
 import React from 'react';
-import {FlatList, Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import {globalStyles} from '../utils/GlobalCss';
-import {scale as s, verticalScale as vh} from 'react-native-size-matters';
-import {Config} from '../utils/Config';
-import {Colors} from '../utils/Colors';
-import {noImage} from '../utils/assets';
+import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { scale as s } from 'react-native-size-matters';
+import { Colors } from '../utils/Colors';
+import { Config } from '../utils/Config';
+import { globalStyles } from '../utils/GlobalCss';
 
 interface cardsProps {
   carddata: any;

@@ -29,6 +29,7 @@ import { AppDispatch, RootState } from '../../store/Store';
 
 import BottomTab from '../BottomNavigation/BottomTab';
 import Loader from '../../component/Loader';
+import EventsDetails from '../track/EventsDetails';
 
 const Stack = createNativeStackNavigator();
 
@@ -113,6 +114,10 @@ function StackNavigation() {
               <Stack.Screen
               name="ViewAllMatches"
               component={ViewAllMatches}
+            />
+              <Stack.Screen
+              name="EventsDetails"
+              component={EventsDetails}
             />
           </>
         )}

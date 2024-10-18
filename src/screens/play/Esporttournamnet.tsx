@@ -26,6 +26,7 @@ import {useDispatch} from 'react-redux';
 import {setIsloading} from '../../store/Slice/LoginSlice';
 import HTMLView from 'react-native-htmlview';
 import apiInstance from '../../utils/apiInstance';
+import { ListCardDetails } from '../../component/Loader';
 
 const Esporttournamnet = ({navigation}: any) => {
   const dispatch = useDispatch();
@@ -527,39 +528,7 @@ const Esporttournamnet = ({navigation}: any) => {
   const aboutsection = () => {
     return (
       <>
-        <Image
-          source={{uri: esportdata.Tournament_Image}}
-          style={{width: s(325), height: vs(200), borderRadius: s(10)}}
-        />
-
-        <Text style={[globalStyles.cardtittletxt, {marginTop: vs(12)}]}>
-          {esportdata.Tournament_Name}
-        </Text>
-
-        <View
-          style={{flexDirection: 'row', marginTop: vs(12), marginLeft: s(2)}}>
-          <Image source={calender} />
-          <Text style={[globalStyles.smallLightOrangetxt, {marginLeft: 9}]}>
-            {esportdata.Tournament_StartDate}
-          </Text>
-        </View>
-
-        <View style={{flexDirection: 'row', marginTop: vs(12)}}>
-          <Image
-            source={location}
-            style={{width: s(20), height: vs(15), resizeMode: 'contain'}}
-          />
-
-          <Text style={{marginLeft: 6}}>{esportdata.Tournament_VenueName}</Text>
-        </View>
-
-        <View
-          style={{
-            borderTopWidth: 1,
-            borderColor: Colors.bordergrey,
-            marginTop: vs(12),
-          }}
-        />
+     <ListCardDetails img={esportdata.Tournament_Image} name={esportdata.Tournament_Name} date={esportdata.Tournament_StartDate} location={esportdata.Tournament_VenueName} />
 
         <Text style={[globalStyles.cardtittletxt, {marginTop: vs(12)}]}>
           {Config.about} 
