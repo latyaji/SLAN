@@ -151,7 +151,7 @@ const Track = () => {
         <View style={globalStyles.borderBottomtrack} />
         {renderDots(matchesdata)} 
         <Matcher
-          tittle={Config.myevents}
+          tittle={Config.allevents}
           onPress={eventsViewall}
         />
         <FlatList

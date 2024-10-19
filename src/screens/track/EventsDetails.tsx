@@ -1,18 +1,18 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useNavigation, useRoute } from '@react-navigation/native';
-import React, { useEffect, useState } from 'react';
-import { FlatList, ScrollView, Text, TouchableOpacity, View } from 'react-native';
-import { useDispatch } from 'react-redux';
-import { Header } from '../../component';
+import {useNavigation, useRoute} from '@react-navigation/native';
+import React, {useEffect, useState} from 'react';
+import {FlatList, ScrollView, Text, TouchableOpacity, View} from 'react-native';
+import {useDispatch} from 'react-redux';
+import {Header} from '../../component';
 import {
   EventScheduleMatchesCard,
   ListCardDetails,
 } from '../../component/Loader';
-import { setIsloading } from '../../store/Slice/LoginSlice';
-import { AppDispatch } from '../../store/Store';
+import {setIsloading} from '../../store/Slice/LoginSlice';
+import {AppDispatch} from '../../store/Store';
 import apiInstance from '../../utils/apiInstance';
-import { Colors } from '../../utils/Colors';
-import { globalStyles } from '../../utils/GlobalCss';
+import {Colors} from '../../utils/Colors';
+import {globalStyles} from '../../utils/GlobalCss';
 
 const EventsDetails = ({navigation: {goBack}}: any) => {
   const route = useRoute();
@@ -188,7 +188,6 @@ const EventsDetails = ({navigation: {goBack}}: any) => {
   };
 
   const MyMatches = () => {
-    console.log("my matchessssssss")
     return (
       <FlatList
         data={myMatchesdata}
@@ -200,6 +199,9 @@ const EventsDetails = ({navigation: {goBack}}: any) => {
 
   const ScheduleTable = () => {
     return (
+      <View style={{borderWidth:1,margin:12,justifyContent:"center",alignContent:"center",paddingBottom:6,borderColor:Colors.bordergrey}}>
+
+     
       <View style={[globalStyles.seventypercentcontainer, {paddingLeft: 12}]}>
         <View style={globalStyles.btncontainer}>
           <TouchableOpacity
@@ -233,6 +235,7 @@ const EventsDetails = ({navigation: {goBack}}: any) => {
           </TouchableOpacity>
           <Text style={globalStyles.radiotxt}>My Matches</Text>
         </View>
+      </View>
       </View>
     );
   };
@@ -321,8 +324,14 @@ const EventsDetails = ({navigation: {goBack}}: any) => {
       <ScrollView>
         {eventsection()}
         {toggleBtn()}
-        {selectedTab === 'pointstable' ? <PointTable /> : <ScheduleTable />}
-        {selectedradio == 1 ? <AllMatches /> : <MyMatches />}
+        {selectedTab === 'pointstable' ? (
+          <PointTable />
+        ) : (
+          <>
+            <ScheduleTable />
+            {selectedradio === 1 ? <AllMatches /> : <MyMatches />}
+          </>
+        )}
       </ScrollView>
     </View>
   );

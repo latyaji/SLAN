@@ -95,7 +95,7 @@ export const Matchescard = (MatchesCardtProps: any) => {
 
 export const EventScheduleMatchesCard = (EventScheduleAllMatchesDataProps:any) =>{
   return (
-    <View style={{padding:12,borderWidth:1,borderColor:Colors.lightbordergrey}}>
+    <View style={{padding:12,borderWidth:1,borderColor:Colors.lightbordergrey,marginHorizontal:16,marginVertical:7}}>
     <View style={globalStyles.matchesContainer}>
       <Text style={globalStyles.eventsPlayerName}>{EventScheduleAllMatchesDataProps.data.Player1_Name}</Text>
       <Text style={[globalStyles.eventsPlayerName,{color:Colors.Orange}]}>VS</Text>

@@ -1,5 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
+import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import { FlatList, Text, TouchableOpacity, View } from 'react-native';
 import { vs } from 'react-native-size-matters';
@@ -15,11 +16,12 @@ const ViewAllMatches = ({navigation: {goBack}}: any) => {
   const navigation = useNavigation();
   const [selectedTab, setSelectedTab] = useState('upcoming');
   const dispatch = useDispatch<AppDispatch>();
-  const [alltournamnet, setAllTournamnet] = useState([]);
+  const [upcomingMatches, setUpcomingMatches] = useState([]);
+  const [previousMatches, setPreviousMatches] = useState([]);
 
   const viewallMatchesApiCall = async () => {
     dispatch(setIsloading(true));
-    const getToken = AsyncStorage.getItem('TOKEN');
+    const getToken = await AsyncStorage.getItem('TOKEN');  
     apiInstance
       .post('Public/viewData/50202/all_matches', {
         headers: {
@@ -29,13 +31,31 @@ const ViewAllMatches = ({navigation: {goBack}}: any) => {
       .then(response => {
         dispatch(setIsloading(false));
         if (response.data) {
-          setAllTournamnet(response.data.data.root.rowData_list);
+          const allMatches = response.data.data.root.rowData_list;
+          filterMatches(allMatches);  
         }
       })
       .catch(error => {
         dispatch(setIsloading(false));
         console.log('Error message: ', error.message);
       });
+  };
+
+  const filterMatches = (matches: any[]) => {
+    const currentYear = moment().year(); 
+
+    const upcoming = matches.filter(match => {
+      const matchYear = moment(match.StartDate, "ddd, D MMM'YY -h:mmA").year();
+      return matchYear >= currentYear;  
+    });
+
+    const previous = matches.filter(match => {
+      const matchYear = moment(match.StartDate, "ddd, D MMM'YY -h:mmA").year();
+      return matchYear < currentYear;  
+    });
+
+    setUpcomingMatches(upcoming);
+    setPreviousMatches(previous);
   };
 
   const renderMatches = (item: any) => {
@@ -93,12 +113,23 @@ const ViewAllMatches = ({navigation: {goBack}}: any) => {
           </Text>
         </TouchableOpacity>
       </View>
-      <View>
-        <FlatList
-          data={alltournamnet}
-          renderItem={renderMatches}
-          ListFooterComponent={<View style={{height: vs(180)}} />}
-        />
+
+      <View style={{ flex: 1 }}>
+        {selectedTab === 'upcoming' && upcomingMatches.length === 0 ? (
+          <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
+            <Text>No Upcoming Matches Found</Text>
+          </View>
+        ) : selectedTab === 'previous' && previousMatches.length === 0 ? (
+          <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
+            <Text>No Previous Matches Found</Text>
+          </View>
+        ) : (
+          <FlatList
+            data={selectedTab === 'upcoming' ? upcomingMatches : previousMatches}
+            renderItem={renderMatches}
+            ListFooterComponent={<View style={{height: vs(180)}} />}
+          />
+        )}
       </View>
     </View>
   );

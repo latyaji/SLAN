@@ -295,7 +295,7 @@ export const globalStyles = StyleSheet.create({
     backgroundColor: Colors.lightOrange,
   },
   unselectedButton: {
-    backgroundColor: 'white',
+    backgroundColor: 'transparent',
   },
   selectedText: {
     color: Colors.White,
@@ -309,5 +309,4 @@ export const globalStyles = StyleSheet.create({
   },
   eventsPlayerName:{fontSize:s(15),fontFamily: Config.medium},
   matchesContainer: {flexDirection:"row",justifyContent:"space-between",width:"50%",flexWrap:"wrap"}
-
 });
