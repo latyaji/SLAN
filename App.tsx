@@ -26,7 +26,7 @@ function App() {
       />
       <PaperProvider>
         <View style={{flex:1}}>
-          {netInfo.isInternetReachable ? (
+          {netInfo?.isInternetReachable ? (
             <StackNavigation/>
           ) : (
             <Internet/>
@@ -38,5 +38,3 @@ function App() {
 }
 
 export default App;
-
-
