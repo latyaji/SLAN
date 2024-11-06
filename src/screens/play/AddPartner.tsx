@@ -19,9 +19,10 @@ import apiInstance from '../../utils/apiInstance';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { s, vs } from 'react-native-size-matters';
 
-const AddPartner = () => {
+const AddPartner = ({route}) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
+  const tournamnetSportsId = route.params;
 
   const [sportsSelect, setSportSelect] = useState([]);
   const [filedData, setFieldData] = useState({
@@ -140,7 +141,11 @@ const AddPartner = () => {
 
     if (response.data) {
       // console.log("response.data--------", response.data);
-      navigation.navigate("Play");
+      // navigation.navigate("Play");
+      const selectId = [{ tournamnetSportsId: tournamnetSportsId.tournamentSportsId }];
+   
+    // navigation.navigate('Esporttournamnet');
+    navigation.navigate('SelectParticipants', { selectedItems: selectId });
     }
   };
 

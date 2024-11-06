@@ -13,6 +13,7 @@ import {
   Login,
   Onboarding,
   OtpVerfication,
+  PaymentDetails,
   SelectParticipants,
   Signup,
   SplashScreen,
@@ -118,6 +119,10 @@ function StackNavigation() {
               <Stack.Screen
               name="EventsDetails"
               component={EventsDetails}
+            />
+              <Stack.Screen
+              name="PaymentDetails"
+              component={PaymentDetails}
             />
           </>
         )}

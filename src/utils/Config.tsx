@@ -77,5 +77,10 @@ mymatches : "My Matches",
 nodataavailable : "No Data Available",
 myevents : "My Events",
 allevents : "All Events",
-viewallmatches : "View All Matches"
+viewallmatches : "View All Matches",
+paymentdetails  : "Payment Details",
+addmember : "Added Members ",
+esporttournament : "E-Sports Tournament",
+applycoupon : "Apply Coupon",
+apply : "Apply"
 }

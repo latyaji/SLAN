@@ -19,6 +19,9 @@ import SelectParticipants from "./play/SelectParticipants";
 import AddParticipant from "./play/AddParticipant";
 import AddTeam from "./play/AddTeam";
 import AddPartner from "./play/AddPartner";
+import PaymentDetails from "./play/PaymentDetails";
+
+
 import AllEvents from "./track/AllEvents";
 import ViewAllMatches from "./track/ViewAllMatches";
 
@@ -45,5 +48,6 @@ export {
     AddTeam,
     AddPartner,
     AllEvents,
-    ViewAllMatches
+    ViewAllMatches,
+    PaymentDetails
 }

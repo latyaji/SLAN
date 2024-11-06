@@ -97,6 +97,7 @@ const Esporttournamnet = ({navigation}: any) => {
       alert('Please select at least one sport to register.');
       return;
     }
+    console.log("slectid----------",selectedIDs)
   
     navigation.navigate('SelectParticipants', { selectedItems: selectedIDs });
   };

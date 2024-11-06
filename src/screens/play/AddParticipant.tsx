@@ -28,8 +28,10 @@ import moment from 'moment';
 import DocumentPicker from 'react-native-document-picker';
 import apiInstance from '../../utils/apiInstance';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useDispatch } from 'react-redux';
+import { setIsloading } from '../../store/Slice/LoginSlice';
 
-const AddParticipant = () => {
+const AddParticipant = ({route}) => {
   const [selectedradio, setSelectedRadio] = useState(1);
   const [selectedStartDate, setSelectedStartDate] = useState(null);
   const [isCalendarVisible, setIsCalendarVisible] = useState(false);
@@ -37,8 +39,12 @@ const AddParticipant = () => {
   const [selectIdProof, setselectIdProof] = useState('');
   const [file, setFile] = useState(null);
   const [addParticipantsName,setaddParticipantsName] = useState("")
+  const dispatch = useDispatch();
 
   const navigation = useNavigation();
+
+  const tournamnetSportsId = route.params;
+  // console.log('tournamnetSportsIdtournamnetSportsId-----yha pr id-----------------', JSON.stringify(tournamnetSportsId.tournamentSportsId,null,4));
 
   const idProfList = [
     {tittle: 'PanCard'},
@@ -59,6 +65,8 @@ const AddParticipant = () => {
       selectedStartDate !== null 
     );
   };
+
+
 
   const AddParticipantApi = async() => {
     const getToken = await AsyncStorage.getItem('TOKEN');
@@ -89,8 +97,15 @@ const AddParticipant = () => {
   } 
    )
    if(response.data.Message == "Success"){
-    alert("Partner added succefully")
-    navigation.navigate("Play")
+    // SelectParticipantsApi(tournamnetSportsId.tournamentSportsId)
+    console.log("id sport ki======",tournamnetSportsId.tournamentSportsId)
+    const selectId = [{ tournamnetSportsId: tournamnetSportsId.tournamentSportsId }];
+   
+    // navigation.navigate('Esporttournamnet');
+    navigation.navigate('SelectParticipants', { selectedItems: selectId });
+    // navigation.navigate("SelectParticipants",{ selectedItems: selectId })
+
+    // navigation.navigate("Play")
    }
 
   }

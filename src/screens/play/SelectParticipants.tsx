@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {useNavigation} from '@react-navigation/native';
+import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import React, {useEffect, useState} from 'react';
 import {
   Image,
@@ -17,17 +17,16 @@ import {Colors} from '../../utils/Colors';
 import {Config} from '../../utils/Config';
 import apiInstance from '../../utils/apiInstance';
 import {add, CheckTermsIcon, UnCheckTermsIcon} from '../../utils/assets';
-import { globalStyles } from '../../utils/GlobalCss';
+import {globalStyles} from '../../utils/GlobalCss';
 
 const SelectParticipants = ({route}) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const [playerDataByTournamentId, setPlayerDataByTournamentId] = useState({});
   const selectedSports = route.params?.selectedItems;
-  // const [selectedCheckbox, setSelectedCheckbox] = useState(null); // Store selected IDs
   const [selectedCheckboxes, setSelectedCheckboxes] = useState([]); // Store selected IDs
+  const [selectedPlayerNames, setSelectedPlayerNames] = useState([]); // Store selected player names
   const [totalAmount, setTotalAmount] = useState(0);
-
 
   const SelectParticipantsApi = async tournamnetSportsId => {
     dispatch(setIsloading(true));
@@ -59,8 +58,6 @@ const SelectParticipants = ({route}) => {
       dispatch(setIsloading(false));
     }
   };
-  
-
 
   const handleAddPress = tournamentSportsId => {
     const playerData = playerDataByTournamentId[tournamentSportsId];
@@ -70,82 +67,78 @@ const SelectParticipants = ({route}) => {
       const ispartner = playerData[0].ispartner;
       console.log('ispartner=========', ispartner);
       if (checkDependentID == 1003 || checkDependentID == 11) {
-        navigation.navigate('AddParticipant');
+        navigation.navigate('AddParticipant',{tournamentSportsId:tournamentSportsId});
       } else if (checkDependentID == 1004 && ispartner == 1) {
-        navigation.navigate('AddPartner');
+        navigation.navigate('AddPartner',{tournamentSportsId:tournamentSportsId});
       } else if (checkDependentID == 1004 && ispartner == 0) {
-        navigation.navigate('AddTeam');
+        navigation.navigate('AddTeam',{tournamentSportsId:tournamentSportsId});
       } else {
         console.log('No player data available.');
       }
     }
   };
 
-  // const handleCheckbox = (playerID, teamID) => {
-  //   // Set selectedCheckbox to the currently selected ID
-  //   setSelectedCheckbox(prev =>
-  //     prev === playerID || prev === teamID ? null : playerID || teamID,
-  //   );
-  // };
 
-  const handleCheckbox = (playerID, teamID) => {
+
+  const handleCheckbox = (playerID, teamID, playerName, teamName) => {
     const idToToggle = playerID || teamID;
-
+    const nameToToggle = playerName || teamName;
+  
     setSelectedCheckboxes(prev => {
       if (prev.includes(idToToggle)) {
+        setSelectedPlayerNames(prevNames => prevNames.filter(name => name !== nameToToggle));
         return prev.filter(id => id !== idToToggle);
       } else {
+        setSelectedPlayerNames(prevNames => [...prevNames, nameToToggle]);
         return [...prev, idToToggle];
       }
     });
   };
+  
+
+  useFocusEffect(
+    React.useCallback(() => {
+      const fetchAllParticipants = async () => {
+        dispatch(setIsloading(true));
+        try {
+          const results = await Promise.all(
+            selectedSports.map(item =>
+              SelectParticipantsApi(item.tournamnetSportsId),
+            ),
+          );
+  
+          const newPlayerDataByTournamentId = {};
+          results.forEach(({tournamnetSportsId, rowDataList}) => {
+            newPlayerDataByTournamentId[tournamnetSportsId] = rowDataList;
+          });
+  
+          setPlayerDataByTournamentId(newPlayerDataByTournamentId);
+  
+          const total = Object.keys(newPlayerDataByTournamentId).reduce(
+            (acc, tournamnetSportsId) => {
+              const playerData = newPlayerDataByTournamentId[tournamnetSportsId];
+              if (playerData.length > 0) {
+                const price = parseFloat(playerData[0].Price) || 0;
+                return acc + price;
+              }
+              return acc;
+            },
+            0,
+          );
+          setTotalAmount(total);
+        } catch (error) {
+          console.error('Error fetching participants:', error);
+        } finally {
+          dispatch(setIsloading(false));
+        }
+      };
+  
+      fetchAllParticipants();
+    }, [selectedSports])
+  );
 
 
-  useEffect(() => {
-    const fetchAllParticipants = async () => {
-      dispatch(setIsloading(true));
-      try {
-        const results = await Promise.all(
-          selectedSports.map(item =>
-            SelectParticipantsApi(item.tournamnetSportsId),
-          ),
-        );
-
-        const newPlayerDataByTournamentId = {};
-        results.forEach(({tournamnetSportsId, rowDataList}) => {
-          newPlayerDataByTournamentId[tournamnetSportsId] = rowDataList;
-        });
-        console.log(
-          'newPlayerDataByTournamentId========',
-          newPlayerDataByTournamentId,
-        );
-
-        setPlayerDataByTournamentId(newPlayerDataByTournamentId);
-         // Calculate total amount based on prices of all tournaments
-         const total = Object.keys(newPlayerDataByTournamentId).reduce((acc, tournamnetSportsId) => {
-          const playerData = newPlayerDataByTournamentId[tournamnetSportsId];
-          if (playerData.length > 0) {
-            const price = parseFloat(playerData[0].Price) || 0; // Fallback to 0 if parsing fails
-            return acc + price;
-          }
-          return acc;
-        }, 0);
-        setTotalAmount(total);
-      
-    
-
-      } catch (error) {
-        console.error('Error fetching participants:', error);
-      } finally {
-        dispatch(setIsloading(false));
-      }
-    };
-
-    
-
-    fetchAllParticipants();
-  }, [selectedSports]);
-
+  
   return (
     <View style={{backgroundColor: '#fff', flex: 1}}>
       <Header
@@ -159,15 +152,15 @@ const SelectParticipants = ({route}) => {
           (tournamnetSportsId, index) => (
             <View key={index} style={styles.cardContainer}>
               <View style={styles.cardHeader}>
-                <Text style={styles.cardTxt}>
+                <Text style={globalStyles.cardTxt}>
                   {
                     selectedSports?.find(
                       sport => sport.tournamnetSportsId === tournamnetSportsId,
-                    )?.name
+                    )?.name 
                   }
                 </Text>
                 {playerDataByTournamentId[tournamnetSportsId]?.length > 0 && (
-                  <Text style={styles.cardTxt}>
+                  <Text style={globalStyles.cardTxt}>
                     INR {playerDataByTournamentId[tournamnetSportsId][0].Price}
                   </Text>
                 )}
@@ -182,7 +175,6 @@ const SelectParticipants = ({route}) => {
                     borderColor: Colors.bordergrey,
                   }}>
                   <TouchableOpacity
-                    //onPress={() => navigation.navigate('AddParticipant')}
                     onPress={() => handleAddPress(tournamnetSportsId)}>
                     <Image source={add} style={styles.addImage} />
                   </TouchableOpacity>
@@ -194,52 +186,35 @@ const SelectParticipants = ({route}) => {
                     showsHorizontalScrollIndicator={false}>
                     {playerDataByTournamentId[tournamnetSportsId]?.map(
                       (playerItem, playerIndex) => (
-                        // console.log("playerItem.playerID----->>>>>>>>",JSON.stringify(playerItem.playerID,null,4)),
-                        // console.log("playerItem.teamid----->>>>>>>>",JSON.stringify(playerItem.TeamId,null,4))
                         <View key={playerIndex} style={{padding: 16}}>
-                          {/* <TouchableOpacity
+               
+                          <TouchableOpacity
                             onPress={() =>
                               handleCheckbox(
                                 playerItem.playerID,
                                 playerItem.TeamId,
+                                playerItem.PlayerName,
+                                playerItem.TeamName,
                               )
                             }>
                             <Image
+                          
                               source={
-                                selectedCheckbox === playerItem.playerID ||
-                                selectedCheckbox === playerItem.TeamId
+                                selectedCheckboxes.includes(playerItem.playerID) ||
+                                selectedCheckboxes.includes(playerItem.TeamId)
                                   ? CheckTermsIcon
                                   : UnCheckTermsIcon
                               }
                               style={{marginLeft: 10}}
                             />
-                          </TouchableOpacity> */}
-                           <TouchableOpacity
-                        onPress={() => handleCheckbox(playerItem.playerID, playerItem.TeamId)}>
-                        <Image
-                          source={
-                            selectedCheckboxes.includes(playerItem.playerID) ||
-                            selectedCheckboxes.includes(playerItem.TeamId)
-                              ? CheckTermsIcon
-                              : UnCheckTermsIcon
-                          }
-                          style={{marginLeft: 10}}
-                        />
-                      </TouchableOpacity>
+                          </TouchableOpacity>
 
                           <Text style={styles.addText}>
                             {playerItem.PlayerName ||
                               playerItem.TeamName ||
                               'Unknown Player'}
                           </Text>
-                          {/* <Text>
-                            DependentTypeId : {playerItem.DependentTypeId}
-                          </Text>
-                          <Text>tournamnetSportsId : {tournamnetSportsId}</Text>
-                          <Text>
-                            idd : {playerItem.playerID}
-                            {playerItem.TeamId}
-                          </Text> */}
+                          
                         </View>
                       ),
                     )}
@@ -251,15 +226,21 @@ const SelectParticipants = ({route}) => {
         )}
       </ScrollView>
       <View style={styles.totalAmountContainer}>
-        <Text style={styles.cardTxt}>Total Amount: INR {totalAmount.toFixed(2)}</Text>
+        <Text style={globalStyles.cardTxt}>
+          Total Amount: INR {totalAmount.toFixed(2)}
+        </Text>
       </View>
 
       <View style={globalStyles.screenSpacing}>
-      <Button tittle="Proceed to Confirm"  />
+        <Button tittle="Proceed to Confirm" onPress={()=>navigation.navigate("PaymentDetails",{selectedSports:selectedSports,selectedCheckboxes:selectedCheckboxes,selectedPlayerNames: selectedPlayerNames,totalAmount:totalAmount.toFixed(2)})} />
       </View>
     </View>
   );
 };
+
+
+
+export default SelectParticipants;
 
 const styles = StyleSheet.create({
   scrollContainer: {
@@ -314,8 +295,6 @@ const styles = StyleSheet.create({
     // borderTopWidth: 1,
     // borderTopColor: Colors.bordergrey,
     alignItems: 'flex-end',
-    marginRight:s(12)
-  }
+    marginRight: s(12),
+  },
 });
-
-export default SelectParticipants;

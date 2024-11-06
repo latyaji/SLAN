@@ -192,7 +192,7 @@ export const globalStyles = StyleSheet.create({
   },
   selectEventTxt: {
     fontFamily: Config.bold,
-    fontSize: s(14),
+    fontSize: s(15),
     color: Colors.black,
     width: s(280),
   },
@@ -308,5 +308,10 @@ export const globalStyles = StyleSheet.create({
     fontSize: s(12),
   },
   eventsPlayerName:{fontSize:s(15),fontFamily: Config.medium},
-  matchesContainer: {flexDirection:"row",justifyContent:"space-between",width:"50%",flexWrap:"wrap"}
+  matchesContainer: {flexDirection:"row",justifyContent:"space-between",width:"50%",flexWrap:"wrap"},
+  cardTxt: {
+    fontSize: s(13),
+    color: Colors.black,
+    fontFamily: Config.medium,
+  },
 });

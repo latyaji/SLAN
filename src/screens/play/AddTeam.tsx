@@ -22,9 +22,10 @@ import DocumentPicker from 'react-native-document-picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
-const AddTeam = () => {
+const AddTeam = ({route}) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
+  const tournamnetSportsId = route.params;
 
   const [sportsSelect, setSportSelect] = useState([]);
   const [selectedradio, setSelectedRadio] = useState(1);
@@ -160,7 +161,9 @@ const AddTeam = () => {
 
     if (response.data) {
       console.log("team response.data-@@@@@@@@@@@@@@@@-------", response.data);
-     navigation.navigate("Play");
+    //  navigation.navigate("Play");
+    const selectId = [{ tournamnetSportsId: tournamnetSportsId.tournamentSportsId }];
+       navigation.navigate('SelectParticipants', { selectedItems: selectId });
     }
   };
 
